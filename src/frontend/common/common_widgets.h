@@ -1,0 +1,4 @@
+#ifndef COMMON_WIDGETS_H
+#define COMMON_WIDGETS_H
+
+#endif  // COMMON_WIDGETS_H
