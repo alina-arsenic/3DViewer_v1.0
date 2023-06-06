@@ -18,7 +18,6 @@
  */
 
 #include "gui_main.h"
-#include "common/common_widgets.h"
 
 int main(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
@@ -27,11 +26,11 @@ int main(int argc, char *argv[]) {
       .css = {"materials/viewer_glade.css"}
   };
   widgets_core w_core;
-  widgets_buttons btns;
+  widgets_controls ctrl;
   w_core.ui_builder = gtk_builder_new();
   builder_init(&w_core, *path.xml);
-  widget_init(&w_core, &btns);
-  signals_connect(&w_core, &btns);
+  widget_init(&w_core, &ctrl);
+  signals_connect(&w_core, &ctrl);
   set_css_style(&w_core, *path.css);
   gtk_widget_show(w_core.window_main);
   gtk_main();
@@ -46,36 +45,91 @@ void builder_init(widgets_core* w_core, const char* path_xml) {
     g_error_free(w_core->err);
   }
   // initialising main window of application
-  w_core->window_main = GTK_WIDGET(gtk_builder_get_object(w_core->ui_builder, "window_main"));
+  w_core->window_main = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "window_main"));
 }
 
-void widget_init(widgets_core* w_core, widgets_buttons* btns) {
-  btns->trans_x_l = GTK_WIDGET(
+void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
+  ctrls->box_ctrls = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "box_controls"));
+
+  ctrls->trans_grid_menu = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "grid_menu_translation"));
+  ctrls->b_trans_x_l = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_l"));
-  btns->trans_x_r = GTK_WIDGET(
+  ctrls->b_trans_x_r = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_r"));
-  btns->trans_x_reset = GTK_WIDGET(
+  ctrls->b_trans_x_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_reset"));
-  btns->trans_y_l = GTK_WIDGET(
+  ctrls->e_trans_x = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_translation_x"));
+  ctrls->b_trans_y_l = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_l"));
-  btns->trans_y_r = GTK_WIDGET(
+  ctrls->b_trans_y_r = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_r"));
-  btns->trans_y_reset = GTK_WIDGET(
+  ctrls->b_trans_y_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_reset"));
-  btns->trans_z_l = GTK_WIDGET(
+  ctrls->e_trans_y = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_translation_y"));
+  ctrls->b_trans_z_l = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_l"));
-  btns->trans_z_r = GTK_WIDGET(
+  ctrls->b_trans_z_r = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_r"));
-  btns->trans_z_reset = GTK_WIDGET(
+  ctrls->b_trans_z_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_reset"));
+  ctrls->e_trans_z = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_translation_z"));
+  
+  ctrls->rotat_grid_menu = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "grid_menu_rotation"));
+  ctrls->b_rotat_x_l = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_l"));
+  ctrls->b_rotat_x_r = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_r"));
+  ctrls->b_rotat_x_reset = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_reset"));
+  ctrls->e_rotat_x = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_rotation_x"));
+  ctrls->b_rotat_y_l = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_l"));
+  ctrls->b_rotat_y_r = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_r"));
+  ctrls->b_rotat_y_reset = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_reset"));
+  ctrls->e_rotat_y = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_rotation_y"));
+  ctrls->b_rotat_z_l = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_l"));
+  ctrls->b_rotat_z_r = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_r"));
+  ctrls->b_rotat_z_reset = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_reset"));
+  ctrls->e_rotat_z = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_rotation_z"));
+
+  ctrls->scale_grid_menu = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "grid_menu_scale"));
+  ctrls->b_scale_l = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_scaling_l"));
+  ctrls->b_scale_r = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_scaling_r"));
+  ctrls->b_scale_reset = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_scaling_reset"));
+  ctrls->e_scale = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_scaling"));
+
+  ctrls->b_hide_ctrl =  GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_hide_controls"));
 }
 
-void signals_connect(widgets_core* w_core, widgets_buttons* btns) {
+void signals_connect(widgets_core* w_core, widgets_controls* ctrls) {
   // callback function to exit from gtk_main() cycle when app is closed
   g_signal_connect(
       w_core->window_main, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(
+      ctrls->b_hide_ctrl, "pressed", G_CALLBACK(on_btn_pressed_hide_ctrl), ctrls);
 //  g_signal_connect(
-//      btns->trans_x_l, "pressed", G_CALLBACK(on_btn_pressed_trans_x_l), NULL);
+//      ctrls->trans_x_l, "pressed", G_CALLBACK(on_btn_pressed_trans_x_l), NULL);
 }
 
 void set_css_style(widgets_core* w_core, const char* path_css) {

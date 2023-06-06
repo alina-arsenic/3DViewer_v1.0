@@ -48,22 +48,48 @@ typedef struct Widgets_core {
 /**
  * @brief Struct with widgets for control buttons
  */
-typedef struct Widgets_buttons {
-  GtkWidget *trans_x_l;
-  GtkWidget *trans_x_r;
-  GtkWidget *trans_x_reset;
-  GtkWidget *trans_y_l;
-  GtkWidget *trans_y_r;
-  GtkWidget *trans_y_reset;
-  GtkWidget *trans_z_l;
-  GtkWidget *trans_z_r;
-  GtkWidget *trans_z_reset;
+typedef struct Widgets_controls {
+  GtkWidget *box_ctrls;             /*!< Box with all widgets for control */
 
-  GtkWidget *hide_ctrl;
-}widgets_buttons;
+  GtkWidget *trans_grid_menu;       /*!< Grid with translation controls */
+  GtkWidget *b_trans_x_l;           /*!< Button translation x left */
+  GtkWidget *b_trans_x_r;           /*!< Button translation x right */
+  GtkWidget *b_trans_x_reset;       /*!< Button translation x reset */
+  GtkEntry  *e_trans_x;             /*!< Entry  translation x */
+  GtkWidget *b_trans_y_l;           /*!< Button translation y left */
+  GtkWidget *b_trans_y_r;           /*!< Button translation y right */
+  GtkWidget *b_trans_y_reset;       /*!< Button translation y reset */
+  GtkEntry  *e_trans_y;             /*!< Entry  translation y */
+  GtkWidget *b_trans_z_l;           /*!< Button translation z left */
+  GtkWidget *b_trans_z_r;           /*!< Button translation z right */
+  GtkWidget *b_trans_z_reset;       /*!< Button translation z reset */
+  GtkEntry  *e_trans_z;             /*!< Entry  translation z */
+
+  GtkWidget *rotat_grid_menu;       /*!< Grid with rotation controls */
+  GtkWidget *b_rotat_x_l;           /*!< Button rotation x left */
+  GtkWidget *b_rotat_x_r;           /*!< Button rotation x right */
+  GtkWidget *b_rotat_x_reset;       /*!< Button rotation x reset */
+  GtkEntry  *e_rotat_x;             /*!< Entry  rotation x */
+  GtkWidget *b_rotat_y_l;           /*!< Button rotation y left */
+  GtkWidget *b_rotat_y_r;           /*!< Button rotation y right */
+  GtkWidget *b_rotat_y_reset;       /*!< Button rotation y reset */
+  GtkEntry  *e_rotat_y;             /*!< Entry  rotation y */
+  GtkWidget *b_rotat_z_l;           /*!< Button rotation z left */
+  GtkWidget *b_rotat_z_r;           /*!< Button rotation z right */
+  GtkWidget *b_rotat_z_reset;       /*!< Button rotation z reset */
+  GtkEntry  *e_rotat_z;             /*!< Entry  rotation z */
+
+  GtkWidget *scale_grid_menu;       /*!< Grid with scale controls */
+  GtkWidget *b_scale_l;             /*!< Button scale left */
+  GtkWidget *b_scale_r;             /*!< Button scale right */
+  GtkWidget *b_scale_reset;         /*!< Button scale reset */
+  GtkEntry  *e_scale;               /*!< Entry  scale */
+
+  GtkWidget *b_hide_ctrl;             /*!< Button to hide GUI controls */
+}widgets_controls;
 
 
-
+//************************ MAIN INIT FUNCTIONS *******************************//
 
 /**
  * @brief Parses a XML file designed in Glade, which contains a UI definition.
@@ -73,14 +99,19 @@ void builder_init(widgets_core* w_core, const char* path_xml);
 /**
  * @brief Manual initialisation of widgets by its ID in Glade to further use
  */
-void widget_init(widgets_core* w_core, widgets_buttons* btns);
+void widget_init(widgets_core* w_core, widgets_controls* btns);
 /**
  * @brief Connecting signals to its handlers as callback functions
  */
-void signals_connect(widgets_core* w_core, widgets_buttons* btns);
+void signals_connect(widgets_core* w_core, widgets_controls* btns);
 /**
  * @brief Setting css style for interface elements from file
  */
 void set_css_style(widgets_core* w_core, const char* path_css);
+
+
+//*************************** EVENT HANDLERS *********************************//
+
+void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data);
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H
