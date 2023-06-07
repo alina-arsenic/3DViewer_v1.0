@@ -132,8 +132,12 @@ void set_css_style(widgets_core* w_core, const char* path_css);
 //*************************** EVENT HANDLERS *********************************//
 
 void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data);
-
-void on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data);
+/**
+ * @brief Reading pressed buttons TODO: fill it
+ * @return gboolean Always returns false. #TRUE used to stop other handlers from
+ * being invoked for the event. #FALSE to propagate the event further.
+ */
+gboolean on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data);
 
 void on_adj_trans_changed(GtkAdjustment *adj, gpointer user_data);
 void on_adj_rotat_changed(GtkAdjustment *adj, gpointer user_data);
@@ -141,6 +145,7 @@ void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data);
 
 //******************************* UTILITY ************************************//
 
-void set_adjustment_to_entry(GtkEntry *entry, GtkAdjustment *adj);
+void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
+void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H
