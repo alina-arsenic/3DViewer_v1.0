@@ -740,13 +740,18 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">blah-blah-blah
+
 Keyboard Controls:
 Translation:
-x: WwЦц, SsЫы;    y: AaФф, DdВв;    z: QqЙй, EeУу
+x: W(w)/Ц(ц), S(s)/Ы(ы); 
+y: A(a)/Ф(ф), D(d)/В(в);
+z: Q(q)/Й(й), E(e)/У(у);
 Rotation: 
 -||- with ctrl
 Scaling:
-+/-
+(+)/(-)
+Reset controls to default: R(r)/К(к)
+
 Mouse Controls:
 Translation: RMB
 Rotation: LMB

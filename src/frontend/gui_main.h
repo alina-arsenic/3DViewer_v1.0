@@ -175,20 +175,27 @@ void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data);
 
 void on_btn_pressed_b_trans_x_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_x_reset(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_y_reset(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_z_reset(GtkButton *button, gpointer user_data);
 
 void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_x_reset(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_y_reset(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_z_reset(GtkButton *button, gpointer user_data);
 
 void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data);
 
 void on_glarea_realize(GtkGLArea *glarea);
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context);
@@ -213,5 +220,6 @@ void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 gboolean keyval_compare(uint ref, ...);
 gboolean is_key(uint keyval, char key);
+void reset_scale(widgets_controls *ctrl);
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H

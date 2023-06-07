@@ -65,6 +65,8 @@ gboolean on_key_press(
     on_btn_pressed_b_scale_l(NULL, p_ctrl);
   } else if (is_key(key, '+')) {
     on_btn_pressed_b_scale_r(NULL, p_ctrl);
+  } else if (is_key(key, 'R')) {
+    reset_scale(p_ctrl);
   }
   return FALSE;
 }
@@ -99,6 +101,11 @@ void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_trans_x, INC_MUL, CTRL_MUL);
 }
 
+void on_btn_pressed_b_trans_x_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_x, SET_TO_VAL, 0);
+}
+
 void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_trans_y, DEC_MUL, CTRL_MUL);
@@ -107,6 +114,11 @@ void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data) {
 void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_trans_y, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_y_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_y, SET_TO_VAL, 0);
 }
 
 void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data) {
@@ -119,6 +131,11 @@ void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_trans_z, INC_MUL, CTRL_MUL);
 }
 
+void on_btn_pressed_b_trans_z_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_z, SET_TO_VAL, 0);
+}
+
 void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_rotat_x, DEC_MUL, CTRL_MUL);
@@ -127,6 +144,11 @@ void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data) {
 void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_rotat_x, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_x_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_x, SET_TO_VAL, 0);
 }
 
 void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data) {
@@ -139,6 +161,11 @@ void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_rotat_y, INC_MUL, CTRL_MUL);
 }
 
+void on_btn_pressed_b_rotat_y_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_y, SET_TO_VAL, 0);
+}
+
 void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_rotat_z, DEC_MUL, CTRL_MUL);
@@ -149,6 +176,11 @@ void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_rotat_z, INC_MUL, CTRL_MUL);
 }
 
+void on_btn_pressed_b_rotat_z_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_z, SET_TO_VAL, 0);
+}
+
 void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_scale, DEC_MUL, CTRL_MUL);
@@ -157,6 +189,11 @@ void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data) {
 void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   shift_adjustment(p_ctrl->adj_scale, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_scale, SET_TO_VAL, 10);
 }
 
 

@@ -127,6 +127,9 @@ gboolean is_key(uint keyval, char key) {
   } else if (key == '+') {
     res = keyval_compare(keyval, GDK_KEY_plus, GDK_KEY_KP_Add,
                          GDK_KEY_equal, 0);
+  } else if (key == 'R') {
+    res = keyval_compare(keyval, GDK_KEY_R, GDK_KEY_r, GDK_KEY_Cyrillic_ie,
+                         GDK_KEY_Cyrillic_IE, 0);
   }
   return (res);
 }
@@ -143,4 +146,14 @@ gboolean keyval_compare(uint ref, ...) {
   }
   va_end(marker);
   return (equal);
+}
+
+void reset_scale(widgets_controls *ctrl) {
+  shift_adjustment(ctrl->adj_trans_x, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_trans_y, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_trans_z, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_rotat_x, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_rotat_y, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_rotat_z, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->adj_scale, SET_TO_VAL, 10);
 }

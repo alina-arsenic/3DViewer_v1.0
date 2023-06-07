@@ -176,32 +176,46 @@ void signals_connect(
                    G_CALLBACK(on_btn_pressed_b_trans_x_l), ctrls);
   g_signal_connect(ctrls->b_trans_x_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_trans_x_r), ctrls);
+  g_signal_connect(ctrls->b_trans_x_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_x_reset), ctrls);
   g_signal_connect(ctrls->b_trans_y_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_trans_y_l), ctrls);
   g_signal_connect(ctrls->b_trans_y_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_trans_y_r), ctrls);
+  g_signal_connect(ctrls->b_trans_y_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_y_reset), ctrls);
   g_signal_connect(ctrls->b_trans_z_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_trans_z_l), ctrls);
   g_signal_connect(ctrls->b_trans_z_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_trans_z_r), ctrls);
+  g_signal_connect(ctrls->b_trans_z_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_z_reset), ctrls);
 
   g_signal_connect(ctrls->b_rotat_x_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_x_l), ctrls);
   g_signal_connect(ctrls->b_rotat_x_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_x_r), ctrls);
+  g_signal_connect(ctrls->b_rotat_x_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_x_reset), ctrls);
   g_signal_connect(ctrls->b_rotat_y_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_y_l), ctrls);
   g_signal_connect(ctrls->b_rotat_y_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_y_r), ctrls);
+  g_signal_connect(ctrls->b_rotat_y_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_y_reset), ctrls);
   g_signal_connect(ctrls->b_rotat_z_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_z_l), ctrls);
   g_signal_connect(ctrls->b_rotat_z_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_rotat_z_r), ctrls);
+  g_signal_connect(ctrls->b_rotat_z_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_z_reset), ctrls);
 
   g_signal_connect(ctrls->b_scale_l, "pressed",
                    G_CALLBACK(on_btn_pressed_b_scale_l), ctrls);
   g_signal_connect(ctrls->b_scale_r, "pressed",
                    G_CALLBACK(on_btn_pressed_b_scale_r), ctrls);
+  g_signal_connect(ctrls->b_scale_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_scale_reset), ctrls);
 
 //  g_signal_connect(
 //      ctrls->e_trans_x, "changed", G_CALLBACK(on_entry_trans_x_changed), ctrls);
