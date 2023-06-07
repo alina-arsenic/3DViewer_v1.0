@@ -158,3 +158,121 @@ void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_scale, INC_MUL, CTRL_MUL);
 }
 
+
+//********************** GLArea events ***************************************//
+
+// Mouse movement:
+static struct {
+  gboolean pressed_button; /*!< Mouse button is pressed */
+  mouse_button button;
+  double x;
+  double y;
+  double dx;
+  double dy;
+
+  double z;
+
+  double buf_x_t;
+  double buf_y_t;
+  double buf_x_r;
+  double buf_y_r;
+} panning = {
+    .z = 0.f
+};
+
+void model_panning_start(double x, double y) {
+  panning.x = x;
+  panning.y = y;
+}
+
+void model_panning_move(double x, double y)
+{
+  panning.dx = panning.x - x;
+  panning.dy = panning.y - y;
+}
+
+void view_z_decrease (void) {
+    panning.z -= 5.f;
+}
+
+void view_z_increase (void) {
+    panning.z += 5.f;
+}
+
+gboolean on_glarea_scroll(
+    GtkWidget* widget, GdkEventScroll *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  if (event->direction == GDK_SCROLL_UP) {
+    view_z_decrease();
+  } else if (event->direction == GDK_SCROLL_DOWN) {
+    view_z_increase();
+  }
+
+  //////////// FIXME: Just to test, insert implementation here
+  shift_adjustment(p_ctrl->adj_scale, INC_FLAT, panning.z);
+  panning.z = 0;
+  printf("Mouse scroll state = z = %lf\n", panning.z);
+  ////////////
+  return FALSE;
+}
+
+gboolean on_glarea_button_press(
+    GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  GtkAllocation allocation;
+  gtk_widget_get_allocation(widget, &allocation);
+  if (event->button == LMB || event->button == MMB || event->button == RMB) {
+    panning.button = event->button;
+    if (panning.pressed_button == FALSE) {
+      panning.pressed_button = TRUE;
+      model_panning_start(event->x, allocation.height - event->y);
+    }
+  }
+
+  //////////// FIXME: Just to test, insert implementation here
+  panning.buf_x_t = gtk_adjustment_get_value(p_ctrl->adj_trans_x);
+  panning.buf_y_t = gtk_adjustment_get_value(p_ctrl->adj_trans_y);
+  panning.buf_x_r = gtk_adjustment_get_value(p_ctrl->adj_rotat_x);
+  panning.buf_y_r = gtk_adjustment_get_value(p_ctrl->adj_rotat_y);
+
+  printf("Mouse init place = x = %lf y = %lf\n", panning.x, panning.y);
+  /////////
+  return FALSE;
+}
+
+gboolean on_glarea_button_release(
+    GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  if (event->button == LMB || event->button == MMB || event->button == RMB){
+    panning.button = event->button;
+    panning.pressed_button = FALSE;
+  }
+
+  return FALSE;
+}
+
+gboolean on_glarea_motion_notify(
+    GtkWidget *widget, GdkEventMotion *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  GtkAllocation allocation;
+  gtk_widget_get_allocation(widget, &allocation);
+
+  if (panning.pressed_button == TRUE) {
+    model_panning_move(event->x, allocation.height - event->y);
+  }
+
+  //////////// FIXME: Just to test, insert implementation here
+  if (panning.button == RMB) {
+    shift_adjustment(p_ctrl->adj_trans_x, SET_TO_VAL, panning.buf_x_t + panning.dx);
+    shift_adjustment(p_ctrl->adj_trans_y, SET_TO_VAL, panning.buf_y_t + panning.dy);
+  } else if (panning.button == LMB) {
+    shift_adjustment(p_ctrl->adj_rotat_x, SET_TO_VAL,
+                     panning.buf_x_r + panning.dx);
+    shift_adjustment(p_ctrl->adj_rotat_y, SET_TO_VAL,
+                     panning.buf_y_r + panning.dy);
+  }
+  printf("Mouse new place = x = %lf y = %lf\n", panning.x, panning.y);
+  printf("Mouse movement = dx = %lf dy = %lf\n", panning.dx, panning.dy);
+  /////////
+  return FALSE;
+}

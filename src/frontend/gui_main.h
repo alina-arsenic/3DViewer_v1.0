@@ -101,6 +101,11 @@ typedef struct Widgets_controls {
   GtkWidget *b_help;                /*!< Button to open help/about window */
 }widgets_controls;
 
+typedef struct Render_data {
+  GtkWidget *glarea;                 /*!< Area to render 3D object */
+
+}render_data;
+
 typedef enum Shift_type {
   INC_FLAT,        /*!< Increase to flat value */
   DEC_FLAT,        /*!< Decrease to flat value */
@@ -111,6 +116,11 @@ typedef enum Shift_type {
   SET_TO_MAX       /*!< Set to max value */
 }shift_type;
 
+typedef enum Mouse_button {
+  LMB = 1,         /*!< Value on click event on left mouse button */
+  MMB = 2,         /*!< Value on click event on mouse scroll? */
+  RMB = 3          /*!< Value on click event on right mouse button */
+}mouse_button;
 //************************ MAIN INIT FUNCTIONS *******************************//
 
 /**
@@ -127,9 +137,17 @@ void widget_init(widgets_core* w_core, widgets_controls* ctrls);
  */
 void entry_init(widgets_controls* ctrls);
 /**
+ * @brief OpenGL area initialisation
+ */
+void glarea_init(widgets_core* w_core, render_data *render);
+/**
  * @brief Connecting signals to its handlers as callback functions
  */
 void signals_connect(widgets_core* w_core, widgets_controls* ctrls);
+/**
+ * @brief Connecting signals to glarea events to its handlers
+ */
+void glarea_signals_connect(render_data *render, widgets_controls *ctrls);
 /**
  * @brief Setting css style for interface elements from file
  */
@@ -167,6 +185,16 @@ void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data);
 
 void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
+
+gboolean on_glarea_scroll(
+    GtkWidget* widget, GdkEventScroll *event, gpointer user_data);
+gboolean on_glarea_button_press(
+    GtkWidget *widget, GdkEventButton *event, gpointer user_data);
+gboolean on_glarea_button_release(
+    GtkWidget *widget, GdkEventButton *event, gpointer user_data);
+gboolean on_glarea_motion_notify(
+    GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
+
 
 //******************************* UTILITY ************************************//
 

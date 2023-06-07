@@ -136,12 +136,18 @@ void entry_init(widgets_controls* ctrls) {
   on_adj_scale_changed(NULL, ctrls);
 }
 
+void glarea_init(widgets_core* w_core, render_data *render) {
+  render->glarea = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "gl_drawing_area"));
+}
+
 void signals_connect(widgets_core* w_core, widgets_controls* ctrls) {
   // callback function to exit from gtk_main() cycle when app is closed
   g_signal_connect(w_core->window_main, "destroy",
                    G_CALLBACK(gtk_main_quit), NULL);
   g_signal_connect(w_core->window_help, "delete-event",
                    G_CALLBACK(on_widget_deleted), NULL);
+
   g_signal_connect(ctrls->b_hide_ctrl, "pressed",
                    G_CALLBACK(on_btn_pressed_hide_ctrl), ctrls);
   g_signal_connect(ctrls->b_help, "pressed",
@@ -208,6 +214,28 @@ void signals_connect(widgets_core* w_core, widgets_controls* ctrls) {
 //      ctrls->e_rotat_z, "changed", G_CALLBACK(on_entry_rotat_z_changed), ctrls);
 //  g_signal_connect(
 //      ctrls->e_scale, "changed", G_CALLBACK(on_entry_scale_changed), ctrls);
+}
+
+void glarea_signals_connect(render_data *render, widgets_controls *ctrls) {
+  // event to mouse controls: buttons and scroll
+  gtk_widget_add_events(render->glarea, GDK_SCROLL_MASK);
+  gtk_widget_add_events(render->glarea, GDK_BUTTON_PRESS_MASK);
+  gtk_widget_add_events(render->glarea, GDK_BUTTON_RELEASE_MASK);
+  gtk_widget_add_events(render->glarea, GDK_BUTTON1_MOTION_MASK);
+  gtk_widget_add_events(render->glarea, GDK_BUTTON2_MOTION_MASK);
+  gtk_widget_add_events(render->glarea, GDK_BUTTON3_MOTION_MASK);
+//  g_signal_connect(render->glarea, "realize", G_CALLBACK(on_glarea_realize), 0);
+//  g_signal_connect(render->glarea, "render", G_CALLBACK(on_glarea_render), 0);
+//  g_signal_connect(render->glarea, "resize", G_CALLBACK(on_glarea_resize), 0);
+
+  g_signal_connect(render->glarea, "scroll-event",
+                   G_CALLBACK(on_glarea_scroll), ctrls);
+  g_signal_connect(render->glarea, "button-press-event",
+                   G_CALLBACK(on_glarea_button_press), ctrls);
+  g_signal_connect(render->glarea, "button-release-event",
+                   G_CALLBACK(on_glarea_button_release), ctrls);
+  g_signal_connect(render->glarea, "motion-notify-event",
+                   G_CALLBACK(on_glarea_motion_notify), ctrls);
 }
 
 void set_css_style(widgets_core* w_core, const char* path_css) {

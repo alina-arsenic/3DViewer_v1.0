@@ -27,11 +27,15 @@ int main(int argc, char *argv[]) {
   };
   widgets_core w_core;
   widgets_controls ctrl;
+  render_data render;
+
   w_core.ui_builder = gtk_builder_new();
   builder_init(&w_core, *path.xml);
   widget_init(&w_core, &ctrl);
   entry_init(&ctrl);
+  glarea_init(&w_core, &render);
   signals_connect(&w_core, &ctrl);
+  glarea_signals_connect(&render, &ctrl);
   set_css_style(&w_core, *path.css);
   gtk_widget_show(w_core.window_main);
   gtk_main();
