@@ -33,6 +33,7 @@ gboolean on_key_press(
   widgets_controls *p_ctrl = user_data;
   GtkWidget *target;
   uint key = event->keyval;
+  gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   printf("Pressed key: %d\n", event->keyval);
   if (key == GDK_KEY_Return) {
     target = gtk_window_get_focus(GTK_WINDOW(widget));
@@ -51,54 +52,33 @@ gboolean on_key_press(
     } else if (target == GTK_WIDGET(p_ctrl->e_scale)) {
       set_adjustment_from_entry(p_ctrl->e_scale, p_ctrl->adj_scale);
     }
-  } else if (key == GDK_KEY_A || key == GDK_KEY_a ||
-             key == GDK_KEY_Cyrillic_ef || key == GDK_KEY_Cyrillic_EF) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_x_l(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_x_l(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_D || key == GDK_KEY_d ||
-             key == GDK_KEY_Cyrillic_ve || key == GDK_KEY_Cyrillic_VE) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_x_r(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_x_r(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_S || key == GDK_KEY_s||
-             key == GDK_KEY_Cyrillic_yeru || key == GDK_KEY_Cyrillic_YERU) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_y_l(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_y_l(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_W || key == GDK_KEY_w||
-             key == GDK_KEY_Cyrillic_tse || key == GDK_KEY_Cyrillic_TSE) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_y_r(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_y_r(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_Q || key == GDK_KEY_q||
-             key == GDK_KEY_Cyrillic_shorti ||
-             key == GDK_KEY_Cyrillic_SHORTI) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_z_l(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_z_l(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_E || key == GDK_KEY_e||
-             key == GDK_KEY_Cyrillic_u ||
-             key == GDK_KEY_Cyrillic_U) {
-    if (event->state & GDK_CONTROL_MASK) {
-      on_btn_pressed_b_rotat_z_r(NULL, p_ctrl);
-    } else {
-      on_btn_pressed_b_trans_z_r(NULL, p_ctrl);
-    }
-  } else if (key == GDK_KEY_minus || key == GDK_KEY_KP_Subtract) {
+  } else if (is_key(key, 'A')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_x_l(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_x_l(NULL, p_ctrl);
+  } else if (is_key(key, 'D')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_x_r(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_x_r(NULL, p_ctrl);
+  } else if (is_key(key, 'S')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_y_l(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_y_l(NULL, p_ctrl);
+  } else if (is_key(key, 'W')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_y_r(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_y_r(NULL, p_ctrl);
+  } else if (is_key(key, 'Q')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_z_l(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_z_l(NULL, p_ctrl);
+  } else if (is_key(key, 'E')) {
+    ctrl_pressed ?
+                 on_btn_pressed_b_rotat_z_r(NULL, p_ctrl) :
+                 on_btn_pressed_b_trans_z_r(NULL, p_ctrl);
+  } else if (is_key(key, '-')) {
     on_btn_pressed_b_scale_l(NULL, p_ctrl);
-  } else if (key == GDK_KEY_plus || key == GDK_KEY_KP_Add ||
-                 key == GDK_KEY_equal) {
+  } else if (is_key(key, '+')) {
     on_btn_pressed_b_scale_r(NULL, p_ctrl);
   }
   return FALSE;

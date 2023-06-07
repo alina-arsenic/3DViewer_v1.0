@@ -81,3 +81,46 @@ void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value) {
     gtk_adjustment_set_value(adj, DBL_MAX);
   }
 }
+
+gboolean is_key(uint keyval, char key) {
+  gboolean res = FALSE;
+  if (key == 'A') {
+    res = keyval_compare(keyval, GDK_KEY_A, GDK_KEY_a, GDK_KEY_Cyrillic_ef,
+                         GDK_KEY_Cyrillic_EF, 0);
+  } else if (key == 'D') {
+    res = keyval_compare(keyval, GDK_KEY_D, GDK_KEY_d, GDK_KEY_Cyrillic_ve,
+                         GDK_KEY_Cyrillic_VE, 0);
+  } else if (key == 'S') {
+    res = keyval_compare(keyval, GDK_KEY_S, GDK_KEY_s,
+                         GDK_KEY_Cyrillic_yeru, GDK_KEY_Cyrillic_YERU, 0);
+  } else if (key == 'W') {
+    res = keyval_compare(keyval, GDK_KEY_W, GDK_KEY_w, GDK_KEY_Cyrillic_tse,
+                         GDK_KEY_Cyrillic_TSE, 0);
+  } else if (key == 'Q') {
+    res = keyval_compare(keyval, GDK_KEY_Q, GDK_KEY_q,
+                         GDK_KEY_Cyrillic_shorti, GDK_KEY_Cyrillic_SHORTI, 0);
+  } else if (key == 'E') {
+    res = keyval_compare(keyval, GDK_KEY_E, GDK_KEY_e, GDK_KEY_Cyrillic_u,
+                         GDK_KEY_Cyrillic_U, 0);
+  } else if (key == '-') {
+    res = keyval_compare(keyval, GDK_KEY_minus, GDK_KEY_KP_Subtract, 0);
+  } else if (key == '+') {
+    res = keyval_compare(keyval, GDK_KEY_plus, GDK_KEY_KP_Add,
+                         GDK_KEY_equal, 0);
+  }
+  return (res);
+}
+
+gboolean keyval_compare(uint ref, ...) {
+  va_list marker;
+  uint buffer = ref;
+  gboolean equal = FALSE;
+  va_start(marker, ref);
+
+  while (buffer != 0 && !equal) {
+    buffer = va_arg(marker, uint);
+    equal = (ref == buffer) ? TRUE : FALSE;
+  }
+  va_end(marker);
+  return (equal);
+}

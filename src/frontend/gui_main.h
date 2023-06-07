@@ -176,5 +176,7 @@ gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
+gboolean keyval_compare(uint ref, ...);
+gboolean is_key(uint keyval, char key);
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H
