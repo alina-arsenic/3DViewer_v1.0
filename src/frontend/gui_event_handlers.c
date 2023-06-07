@@ -9,7 +9,9 @@
  * TODO: adjust on release
  */
 
+#include <gdk/gdkkeysyms.h>
 #include "gui_main.h"
+
 
 void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
@@ -20,4 +22,64 @@ void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data) {
     gtk_widget_set_visible(p_ctrl->box_ctrls, TRUE);
     gtk_button_set_label(button, "Hide controls");
   }
+}
+
+void set_adjustment_to_entry(GtkEntry *entry, GtkAdjustment *adj) {
+  const char *entry_buffer;
+  char *p_entry_buffer;
+  double entry_value;
+  entry_buffer = gtk_entry_get_text(entry);
+  entry_value = strtod(entry_buffer, &p_entry_buffer);
+  if (*p_entry_buffer == '\0') {
+    gtk_adjustment_set_value(adj, entry_value);
+  }
+}
+
+void on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  GtkWidget *target;
+//  printf("Pressed key: %d\n", event->keyval);
+  if (event->keyval == GDK_KEY_Return) {
+    target = gtk_window_get_focus(GTK_WINDOW(widget));
+    if (target == GTK_WIDGET(p_ctrl->e_trans_x)) {
+      set_adjustment_to_entry(p_ctrl->e_trans_x, p_ctrl->adj_trans_x);
+    }
+  }
+}
+
+void on_adj_trans_changed(GtkAdjustment *adj, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  char entry_buffer[ENTRY_BUFFER_SIZE];
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_trans_x));
+  gtk_entry_set_text(p_ctrl->e_trans_x, entry_buffer);
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_trans_y));
+  gtk_entry_set_text(p_ctrl->e_trans_y, entry_buffer);
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_trans_z));
+  gtk_entry_set_text(p_ctrl->e_trans_z, entry_buffer);
+}
+
+
+void on_adj_rotat_changed(GtkAdjustment *adj, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  char entry_buffer[ENTRY_BUFFER_SIZE];
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_rotat_x));
+  gtk_entry_set_text(p_ctrl->e_rotat_x, entry_buffer);
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_rotat_y));
+  gtk_entry_set_text(p_ctrl->e_rotat_y, entry_buffer);
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_rotat_z));
+  gtk_entry_set_text(p_ctrl->e_rotat_z, entry_buffer);
+}
+
+void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  char entry_buffer[ENTRY_BUFFER_SIZE];
+  sprintf(entry_buffer, "%lf",
+          gtk_adjustment_get_value(p_ctrl->adj_scale));
+  gtk_entry_set_text(p_ctrl->e_scale, entry_buffer);
 }

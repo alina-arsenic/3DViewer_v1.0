@@ -2870,11 +2870,11 @@ scale {
 }
 
 scale.horizontal {
-  padding: 17px 12px;
+  padding: 11px 9px;
 }
 
 scale.vertical {
-  padding: 12px 17px;
+  padding: 4px 7px;
 }
 
 scale slider {
