@@ -20,13 +20,11 @@
 #ifndef C8_3DVIEWER_V1_0_1_GUI_MAIN_H
 #define C8_3DVIEWER_V1_0_1_GUI_MAIN_H
 
-#define ENTRY_BUFFER_SIZE 255      /*!< Size of buffer for entry boxes */
-#define FILENAME_LENGTH   4096     /*!< Max length of filename in Linux OS */
+#define CTRL_MUL           0.005L    /*!< Multiplayer to buttons controls */
+#define ENTRY_BUFFER_SIZE  255      /*!< Size of buffer for entry boxes */
+#define FILENAME_LENGTH    4096     /*!< Max length of filename in Linux OS */
 
 #include <gtk-3.0/gtk/gtk.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <math.h>
 
 #include "common/common_externs.h"
 
@@ -44,6 +42,7 @@ typedef struct Config_paths {
 typedef struct Widgets_core {
   GtkBuilder *ui_builder; /*!< Widget for UI builder */
   GtkWidget *window_main; /*!< Widget for main GUI window */
+  GtkWidget *window_help; /*!< Widget for help window */
   GError *err;            /*!< Widget for main error handler */
 }widgets_core;
 /**
@@ -101,8 +100,18 @@ typedef struct Widgets_controls {
   GtkAdjustment *adj_scale;         /*!< Adjustment value scaling */
 
   GtkWidget *b_hide_ctrl;           /*!< Button to hide GUI controls */
+  GtkWidget *b_help;                /*!< Button to open help/about window */
 }widgets_controls;
 
+typedef enum Shift_type {
+  INC_FLAT,        /*!< Increase to flat value */
+  DEC_FLAT,        /*!< Decrease to flat value */
+  INC_MUL,         /*!< Increase by multiplier */
+  DEC_MUL,         /*!< Decrease by multiplier */
+  SET_TO_VAL,      /*!< Set to fixed value */
+  SET_TO_MIN,      /*!< Set to min value */
+  SET_TO_MAX       /*!< Set to max value */
+}shift_type;
 
 //************************ MAIN INIT FUNCTIONS *******************************//
 
@@ -131,6 +140,7 @@ void set_css_style(widgets_core* w_core, const char* path_css);
 
 //*************************** EVENT HANDLERS *********************************//
 
+void on_btn_pressed_help(GtkButton *button, gpointer user_data);
 void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data);
 /**
  * @brief Reading pressed buttons TODO: fill it
@@ -143,9 +153,28 @@ void on_adj_trans_changed(GtkAdjustment *adj, gpointer user_data);
 void on_adj_rotat_changed(GtkAdjustment *adj, gpointer user_data);
 void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data);
 
+void on_btn_pressed_b_trans_x_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data);
+
+void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data);
+
+void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
+void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
+
 //******************************* UTILITY ************************************//
 
+gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
+void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H

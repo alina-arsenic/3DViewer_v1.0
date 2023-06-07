@@ -23,6 +23,8 @@ void builder_init(widgets_core* w_core, const char* path_xml) {
   // initialising main window of application
   w_core->window_main = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "window_main"));
+  w_core->window_help = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "window_help"));
 }
 
 void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
@@ -124,6 +126,8 @@ void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
 
   ctrls->b_hide_ctrl =  GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_hide_controls"));
+  ctrls->b_help =  GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_help"));
 }
 
 void entry_init(widgets_controls* ctrls) {
@@ -134,28 +138,61 @@ void entry_init(widgets_controls* ctrls) {
 
 void signals_connect(widgets_core* w_core, widgets_controls* ctrls) {
   // callback function to exit from gtk_main() cycle when app is closed
-  g_signal_connect(
-      w_core->window_main, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-  g_signal_connect(
-      ctrls->b_hide_ctrl, "pressed", G_CALLBACK(on_btn_pressed_hide_ctrl), ctrls);
-  g_signal_connect(
-      w_core->window_main, "key_press_event", G_CALLBACK(on_key_press), ctrls);
-  //  g_signal_connect(
-  //      ctrls->trans_x_l, "pressed", G_CALLBACK(on_btn_pressed_trans_x_l), NULL);
-  g_signal_connect(
-      ctrls->adj_trans_x, "value-changed", G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_trans_y, "value-changed", G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_trans_z, "value-changed", G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_rotat_x, "value-changed", G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_rotat_y, "value-changed", G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_rotat_z, "value-changed", G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(
-      ctrls->adj_scale, "value-changed", G_CALLBACK(on_adj_scale_changed), ctrls);
+  g_signal_connect(w_core->window_main, "destroy",
+                   G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(w_core->window_help, "delete-event",
+                   G_CALLBACK(on_widget_deleted), NULL);
+  g_signal_connect(ctrls->b_hide_ctrl, "pressed",
+                   G_CALLBACK(on_btn_pressed_hide_ctrl), ctrls);
+  g_signal_connect(ctrls->b_help, "pressed",
+                   G_CALLBACK(on_btn_pressed_help), w_core);
+  g_signal_connect(w_core->window_main, "key_press_event",
+                   G_CALLBACK(on_key_press), ctrls);
+  g_signal_connect(ctrls->adj_trans_x, "value-changed",
+                   G_CALLBACK(on_adj_trans_changed), ctrls);
+  g_signal_connect(ctrls->adj_trans_y, "value-changed",
+                   G_CALLBACK(on_adj_trans_changed), ctrls);
+  g_signal_connect(ctrls->adj_trans_z, "value-changed",
+                   G_CALLBACK(on_adj_trans_changed), ctrls);
+  g_signal_connect(ctrls->adj_rotat_x, "value-changed",
+                   G_CALLBACK(on_adj_rotat_changed), ctrls);
+  g_signal_connect(ctrls->adj_rotat_y, "value-changed",
+                   G_CALLBACK(on_adj_rotat_changed), ctrls);
+  g_signal_connect(ctrls->adj_rotat_z, "value-changed",
+                   G_CALLBACK(on_adj_rotat_changed), ctrls);
+  g_signal_connect(ctrls->adj_scale, "value-changed",
+                   G_CALLBACK(on_adj_scale_changed), ctrls);
+
+  g_signal_connect(ctrls->b_trans_x_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_x_l), ctrls);
+  g_signal_connect(ctrls->b_trans_x_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_x_r), ctrls);
+  g_signal_connect(ctrls->b_trans_y_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_y_l), ctrls);
+  g_signal_connect(ctrls->b_trans_y_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_y_r), ctrls);
+  g_signal_connect(ctrls->b_trans_z_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_z_l), ctrls);
+  g_signal_connect(ctrls->b_trans_z_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_trans_z_r), ctrls);
+
+  g_signal_connect(ctrls->b_rotat_x_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_x_l), ctrls);
+  g_signal_connect(ctrls->b_rotat_x_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_x_r), ctrls);
+  g_signal_connect(ctrls->b_rotat_y_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_y_l), ctrls);
+  g_signal_connect(ctrls->b_rotat_y_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_y_r), ctrls);
+  g_signal_connect(ctrls->b_rotat_z_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_z_l), ctrls);
+  g_signal_connect(ctrls->b_rotat_z_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_rotat_z_r), ctrls);
+
+  g_signal_connect(ctrls->b_scale_l, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_scale_l), ctrls);
+  g_signal_connect(ctrls->b_scale_r, "pressed",
+                   G_CALLBACK(on_btn_pressed_b_scale_r), ctrls);
 
 //  g_signal_connect(
 //      ctrls->e_trans_x, "changed", G_CALLBACK(on_entry_trans_x_changed), ctrls);

@@ -23,12 +23,18 @@ void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data) {
   }
 }
 
+void on_btn_pressed_help(GtkButton *button, gpointer user_data) {
+  widgets_core *p_core = user_data;
+  gtk_widget_show_all(p_core->window_help);
+}
+
 gboolean on_key_press(
     GtkWidget *widget, GdkEventKey *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   GtkWidget *target;
-//  printf("Pressed key: %d\n", event->keyval);
-  if (event->keyval == GDK_KEY_Return) {
+  uint key = event->keyval;
+  printf("Pressed key: %d\n", event->keyval);
+  if (key == GDK_KEY_Return) {
     target = gtk_window_get_focus(GTK_WINDOW(widget));
     if (target == GTK_WIDGET(p_ctrl->e_trans_x)) {
       set_adjustment_from_entry(p_ctrl->e_trans_x, p_ctrl->adj_trans_x);
@@ -45,6 +51,55 @@ gboolean on_key_press(
     } else if (target == GTK_WIDGET(p_ctrl->e_scale)) {
       set_adjustment_from_entry(p_ctrl->e_scale, p_ctrl->adj_scale);
     }
+  } else if (key == GDK_KEY_A || key == GDK_KEY_a ||
+             key == GDK_KEY_Cyrillic_ef || key == GDK_KEY_Cyrillic_EF) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_x_l(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_x_l(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_D || key == GDK_KEY_d ||
+             key == GDK_KEY_Cyrillic_ve || key == GDK_KEY_Cyrillic_VE) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_x_r(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_x_r(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_S || key == GDK_KEY_s||
+             key == GDK_KEY_Cyrillic_yeru || key == GDK_KEY_Cyrillic_YERU) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_y_l(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_y_l(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_W || key == GDK_KEY_w||
+             key == GDK_KEY_Cyrillic_tse || key == GDK_KEY_Cyrillic_TSE) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_y_r(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_y_r(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_Q || key == GDK_KEY_q||
+             key == GDK_KEY_Cyrillic_shorti ||
+             key == GDK_KEY_Cyrillic_SHORTI) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_z_l(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_z_l(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_E || key == GDK_KEY_e||
+             key == GDK_KEY_Cyrillic_u ||
+             key == GDK_KEY_Cyrillic_U) {
+    if (event->state & GDK_CONTROL_MASK) {
+      on_btn_pressed_b_rotat_z_r(NULL, p_ctrl);
+    } else {
+      on_btn_pressed_b_trans_z_r(NULL, p_ctrl);
+    }
+  } else if (key == GDK_KEY_minus || key == GDK_KEY_KP_Subtract) {
+    on_btn_pressed_b_scale_l(NULL, p_ctrl);
+  } else if (key == GDK_KEY_plus || key == GDK_KEY_KP_Add ||
+                 key == GDK_KEY_equal) {
+    on_btn_pressed_b_scale_r(NULL, p_ctrl);
   }
   return FALSE;
 }
@@ -68,3 +123,74 @@ void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   set_entry_from_adjust(p_ctrl->e_scale, p_ctrl->adj_scale);
 }
+
+void on_btn_pressed_b_trans_x_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_x, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_x, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_y, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_y, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_z, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_trans_z, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_x, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_x, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_y, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_y, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_z, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_rotat_z, INC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_scale, DEC_MUL, CTRL_MUL);
+}
+
+void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj_scale, INC_MUL, CTRL_MUL);
+}
+

@@ -698,6 +698,54 @@
             <property name="y">40</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkButton" id="button_help">
+            <property name="label" translatable="yes">?</property>
+            <property name="width-request">40</property>
+            <property name="height-request">-1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">True</property>
+            <property name="always-show-image">True</property>
+          </object>
+          <packing>
+            <property name="x">130</property>
+            <property name="y">5</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="window_help">
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Help</property>
+    <property name="resizable">False</property>
+    <child>
+      <object class="GtkFixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">blah-blah-blah
+Controls:
+Translation:
+x: WwЦц, SsЫы;    y: AaФф, DdВв;    z: QqЙй, EeУу
+Rotation: 
+-||- with ctrl
+Scale:
++/-
+...etc</property>
+          </object>
+          <packing>
+            <property name="x">5</property>
+            <property name="y">5</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
