@@ -141,10 +141,13 @@ void glarea_init(widgets_core* w_core, render_data *render) {
       gtk_builder_get_object(w_core->ui_builder, "gl_drawing_area"));
 }
 
-void signals_connect(widgets_core* w_core, widgets_controls* ctrls) {
+void signals_connect(
+    widgets_core* w_core, widgets_controls* ctrls, render_data *render) {
   // callback function to exit from gtk_main() cycle when app is closed
   g_signal_connect(w_core->window_main, "destroy",
                    G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(w_core->window_main, "check-resize",
+                   G_CALLBACK(on_main_window_resize), render);
   g_signal_connect(w_core->window_help, "delete-event",
                    G_CALLBACK(on_widget_deleted), NULL);
 
@@ -224,9 +227,10 @@ void glarea_signals_connect(render_data *render, widgets_controls *ctrls) {
   gtk_widget_add_events(render->glarea, GDK_BUTTON1_MOTION_MASK);
   gtk_widget_add_events(render->glarea, GDK_BUTTON2_MOTION_MASK);
   gtk_widget_add_events(render->glarea, GDK_BUTTON3_MOTION_MASK);
-//  g_signal_connect(render->glarea, "realize", G_CALLBACK(on_glarea_realize), 0);
-//  g_signal_connect(render->glarea, "render", G_CALLBACK(on_glarea_render), 0);
-//  g_signal_connect(render->glarea, "resize", G_CALLBACK(on_glarea_resize), 0);
+
+  g_signal_connect(render->glarea, "realize", G_CALLBACK(on_glarea_realize), 0);
+  g_signal_connect(render->glarea, "render", G_CALLBACK(on_glarea_render), 0);
+  g_signal_connect(render->glarea, "resize", G_CALLBACK(on_glarea_resize), 0);
 
   g_signal_connect(render->glarea, "scroll-event",
                    G_CALLBACK(on_glarea_scroll), ctrls);

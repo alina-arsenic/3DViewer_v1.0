@@ -57,6 +57,16 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <child>
+          <object class="GtkGLArea" id="gl_drawing_area">
+            <property name="width-request">800</property>
+            <property name="height-request">600</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkButton" id="button_hide_controls">
             <property name="label" translatable="yes">Hide controls</property>
             <property name="width-request">120</property>
@@ -712,33 +722,6 @@
             <property name="y">5</property>
           </packing>
         </child>
-        <child>
-          <object class="GtkGLArea" id="gl_drawing_area">
-            <property name="width-request">400</property>
-            <property name="height-request">400</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-          </object>
-          <packing>
-            <property name="x">300</property>
-            <property name="y">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="mouse_temp_field">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Mouse controls:</property>
-          </object>
-          <packing>
-            <property name="x">492</property>
-            <property name="y">423</property>
-          </packing>
-        </child>
       </object>
     </child>
   </object>
@@ -757,14 +740,17 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">blah-blah-blah
-Controls:
+Keyboard Controls:
 Translation:
 x: WwЦц, SsЫы;    y: AaФф, DdВв;    z: QqЙй, EeУу
 Rotation: 
 -||- with ctrl
-Scale:
+Scaling:
 +/-
-...etc</property>
+Mouse Controls:
+Translation: RMB
+Rotation: LMB
+Scaling: MMB Scroll</property>
           </object>
           <packing>
             <property name="x">5</property>

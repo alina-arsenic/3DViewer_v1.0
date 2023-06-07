@@ -24,6 +24,7 @@
 #define ENTRY_BUFFER_SIZE  255      /*!< Size of buffer for entry boxes */
 #define FILENAME_LENGTH    4096     /*!< Max length of filename in Linux OS */
 
+#include <GL/gl.h>
 #include <gtk-3.0/gtk/gtk.h>
 
 /**
@@ -104,6 +105,8 @@ typedef struct Widgets_controls {
 typedef struct Render_data {
   GtkWidget *glarea;                 /*!< Area to render 3D object */
 
+  int width;
+  int height;
 }render_data;
 
 typedef enum Shift_type {
@@ -143,7 +146,8 @@ void glarea_init(widgets_core* w_core, render_data *render);
 /**
  * @brief Connecting signals to its handlers as callback functions
  */
-void signals_connect(widgets_core* w_core, widgets_controls* ctrls);
+void signals_connect(
+    widgets_core* w_core, widgets_controls* ctrls, render_data *render);
 /**
  * @brief Connecting signals to glarea events to its handlers
  */
@@ -186,6 +190,9 @@ void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
 
+void on_glarea_realize(GtkGLArea *glarea);
+gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context);
+void on_glarea_resize(GtkGLArea *area, gint width, gint height);
 gboolean on_glarea_scroll(
     GtkWidget* widget, GdkEventScroll *event, gpointer user_data);
 gboolean on_glarea_button_press(
@@ -198,6 +205,7 @@ gboolean on_glarea_motion_notify(
 
 //******************************* UTILITY ************************************//
 
+void on_main_window_resize(GtkWindow* window, gpointer user_data);
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
 void read_entry_on_return_key(GtkWidget *window, widgets_controls* ctrls);

@@ -26,6 +26,7 @@ void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data) {
 void on_btn_pressed_help(GtkButton *button, gpointer user_data) {
   widgets_core *p_core = user_data;
   gtk_widget_show_all(p_core->window_help);
+  gtk_window_present(GTK_WINDOW(p_core->window_help));
 }
 
 gboolean on_key_press(
@@ -161,6 +162,39 @@ void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data) {
 
 //********************** GLArea events ***************************************//
 
+
+void on_main_window_resize(GtkWindow* window, gpointer user_data) {
+  render_data *p_render = user_data;
+
+  gtk_window_get_size(window, &p_render->width, &p_render->height);
+  // FIXME: Broken, cant scale down
+  gtk_widget_set_size_request(
+      p_render->glarea, p_render->width, p_render->height);
+}
+
+void on_glarea_realize(GtkGLArea *glarea) {
+  ;
+}
+
+gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context) {
+  // Clear canvas:
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//  // Draw background:
+//  background_draw();
+//
+//  // Draw model:
+//  model_draw();
+
+  // Don't propagate signal:
+  return TRUE;
+}
+
+void on_glarea_resize(GtkGLArea *area, gint width, gint height) {
+  ;
+}
+
+
 // Mouse movement:
 static struct {
   gboolean pressed_button; /*!< Mouse button is pressed */
@@ -242,7 +276,7 @@ gboolean on_glarea_button_press(
 
 gboolean on_glarea_button_release(
     GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
+//  widgets_controls *p_ctrl = user_data;
   if (event->button == LMB || event->button == MMB || event->button == RMB){
     panning.button = event->button;
     panning.pressed_button = FALSE;
