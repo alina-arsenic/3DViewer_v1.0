@@ -29,29 +29,13 @@ void on_btn_pressed_help(GtkButton *button, gpointer user_data) {
 }
 
 gboolean on_key_press(
-    GtkWidget *widget, GdkEventKey *event, gpointer user_data) {
+    GtkWidget *window, GdkEventKey *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
-  GtkWidget *target;
   uint key = event->keyval;
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   printf("Pressed key: %d\n", event->keyval);
   if (key == GDK_KEY_Return) {
-    target = gtk_window_get_focus(GTK_WINDOW(widget));
-    if (target == GTK_WIDGET(p_ctrl->e_trans_x)) {
-      set_adjustment_from_entry(p_ctrl->e_trans_x, p_ctrl->adj_trans_x);
-    } else if (target == GTK_WIDGET(p_ctrl->e_trans_y)) {
-      set_adjustment_from_entry(p_ctrl->e_trans_y, p_ctrl->adj_trans_y);
-    } else if (target == GTK_WIDGET(p_ctrl->e_trans_z)) {
-      set_adjustment_from_entry(p_ctrl->e_trans_z, p_ctrl->adj_trans_z);
-    } else if (target == GTK_WIDGET(p_ctrl->e_rotat_x)) {
-      set_adjustment_from_entry(p_ctrl->e_rotat_x, p_ctrl->adj_rotat_x);
-    } else if (target == GTK_WIDGET(p_ctrl->e_rotat_y)) {
-      set_adjustment_from_entry(p_ctrl->e_rotat_y, p_ctrl->adj_rotat_y);
-    } else if (target == GTK_WIDGET(p_ctrl->e_rotat_z)) {
-      set_adjustment_from_entry(p_ctrl->e_rotat_z, p_ctrl->adj_rotat_z);
-    } else if (target == GTK_WIDGET(p_ctrl->e_scale)) {
-      set_adjustment_from_entry(p_ctrl->e_scale, p_ctrl->adj_scale);
-    }
+    read_entry_on_return_key(window, p_ctrl);
   } else if (is_key(key, 'A')) {
     ctrl_pressed ?
                  on_btn_pressed_b_rotat_x_l(NULL, p_ctrl) :

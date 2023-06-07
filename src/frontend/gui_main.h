@@ -26,8 +26,6 @@
 
 #include <gtk-3.0/gtk/gtk.h>
 
-#include "common/common_externs.h"
-
 /**
  * @brief Struct with paths to files with configurations of UI
  */
@@ -174,6 +172,7 @@ void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
 
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
+void read_entry_on_return_key(GtkWidget *window, widgets_controls* ctrls);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 gboolean keyval_compare(uint ref, ...);
