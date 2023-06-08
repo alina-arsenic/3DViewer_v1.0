@@ -44,6 +44,16 @@ typedef struct Widgets_core {
   GtkWidget *window_help; /*!< Widget for help window */
   GError *err;            /*!< Widget for main error handler */
 }widgets_core;
+
+typedef struct Controls_group {
+  GtkWidget *b_left;      /*!< Button left  (decrease)*/
+  GtkWidget *b_right;     /*!< Button right (increase)*/
+  GtkWidget *b_reset;     /*!< Button reset */
+  GtkEntry  *entry;       /*!< Entry for value */
+  GtkWidget *scale;       /*!< Scale for value */
+  GtkAdjustment *adj;     /*!< Adjustment value */
+}controls_group;
+
 /**
  * @brief Struct with widgets for control buttons
  */
@@ -51,52 +61,17 @@ typedef struct Widgets_controls {
   GtkWidget *box_ctrls;             /*!< Box with all widgets for control */
 
   GtkWidget *trans_grid_menu;       /*!< Grid with translation controls */
-  GtkWidget *b_trans_x_l;           /*!< Button translation x left */
-  GtkWidget *b_trans_x_r;           /*!< Button translation x right */
-  GtkWidget *b_trans_x_reset;       /*!< Button translation x reset */
-  GtkEntry  *e_trans_x;             /*!< Entry  translation x */
-  GtkWidget *s_trans_x;             /*!< Scale  translation x */
-  GtkAdjustment *adj_trans_x;       /*!< Adjustment value  translation x */
-  GtkWidget *b_trans_y_l;           /*!< Button translation y left */
-  GtkWidget *b_trans_y_r;           /*!< Button translation y right */
-  GtkWidget *b_trans_y_reset;       /*!< Button translation y reset */
-  GtkEntry  *e_trans_y;             /*!< Entry  translation y */
-  GtkWidget *s_trans_y;             /*!< Scale  translation y */
-  GtkAdjustment *adj_trans_y;       /*!< Adjustment value  translation y */
-  GtkWidget *b_trans_z_l;           /*!< Button translation z left */
-  GtkWidget *b_trans_z_r;           /*!< Button translation z right */
-  GtkWidget *b_trans_z_reset;       /*!< Button translation z reset */
-  GtkEntry  *e_trans_z;             /*!< Entry  translation z */
-  GtkWidget *s_trans_z;             /*!< Scale  translation z */
-  GtkAdjustment *adj_trans_z;       /*!< Adjustment value  translation z */
+  controls_group trans_x;
+  controls_group trans_y;
+  controls_group trans_z;
 
   GtkWidget *rotat_grid_menu;       /*!< Grid with rotation controls */
-  GtkWidget *b_rotat_x_l;           /*!< Button rotation x left */
-  GtkWidget *b_rotat_x_r;           /*!< Button rotation x right */
-  GtkWidget *b_rotat_x_reset;       /*!< Button rotation x reset */
-  GtkEntry  *e_rotat_x;             /*!< Entry  rotation x */
-  GtkWidget *s_rotat_x;             /*!< Scale  rotation x */
-  GtkAdjustment *adj_rotat_x;       /*!< Adjustment value  rotation x */
-  GtkWidget *b_rotat_y_l;           /*!< Button rotation y left */
-  GtkWidget *b_rotat_y_r;           /*!< Button rotation y right */
-  GtkWidget *b_rotat_y_reset;       /*!< Button rotation y reset */
-  GtkEntry  *e_rotat_y;             /*!< Entry  rotation y */
-  GtkWidget *s_rotat_y;             /*!< Scale  rotation y */
-  GtkAdjustment *adj_rotat_y;       /*!< Adjustment value  rotation x */
-  GtkWidget *b_rotat_z_l;           /*!< Button rotation z left */
-  GtkWidget *b_rotat_z_r;           /*!< Button rotation z right */
-  GtkWidget *b_rotat_z_reset;       /*!< Button rotation z reset */
-  GtkEntry  *e_rotat_z;             /*!< Entry  rotation z */
-  GtkWidget *s_rotat_z;             /*!< Scale  rotation z */
-  GtkAdjustment *adj_rotat_z;       /*!< Adjustment value  rotation x */
+  controls_group rotat_x;
+  controls_group rotat_y;
+  controls_group rotat_z;
 
   GtkWidget *scale_grid_menu;       /*!< Grid with scale controls */
-  GtkWidget *b_scale_l;             /*!< Button scale left */
-  GtkWidget *b_scale_r;             /*!< Button scale right */
-  GtkWidget *b_scale_reset;         /*!< Button scale reset */
-  GtkEntry  *e_scale;               /*!< Entry  scale */
-  GtkWidget *s_scale;               /*!< Scale  scale */
-  GtkAdjustment *adj_scale;         /*!< Adjustment value scaling */
+  controls_group scale;
 
   GtkWidget *b_hide_ctrl;           /*!< Button to hide GUI controls */
   GtkWidget *b_help;                /*!< Button to open help/about window */
@@ -169,33 +144,11 @@ void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data);
  */
 gboolean on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data);
 
-void on_adj_trans_changed(GtkAdjustment *adj, gpointer user_data);
-void on_adj_rotat_changed(GtkAdjustment *adj, gpointer user_data);
-void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data);
+void on_adj_changed(GtkAdjustment *adj, gpointer user_data);
 
-void on_btn_pressed_b_trans_x_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_x_reset(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_y_reset(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_trans_z_reset(GtkButton *button, gpointer user_data);
-
-void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_x_reset(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_y_reset(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_rotat_z_reset(GtkButton *button, gpointer user_data);
-
-void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
-void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data);
+void on_btn_pressed_left(GtkButton *button, gpointer user_data);
+void on_btn_pressed_right(GtkButton *button, gpointer user_data);
+void on_btn_pressed_reset(GtkButton *button, gpointer user_data);
 
 void on_entry_focus_out_event(
     GtkWidget *entry, GdkEventFocus *event, gpointer user_data);
@@ -218,8 +171,9 @@ gboolean on_glarea_motion_notify(
 void on_main_window_resize(GtkWindow* window, gpointer user_data);
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
-void read_entry_on_change(GtkEntry *target, widgets_controls* ctrls);
+void read_entry_on_change(GtkEntry *target, widgets_controls *ctrls);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
+double get_adjustment_range(GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 gboolean keyval_compare(uint ref, ...);
 gboolean is_key(uint keyval, char key);
