@@ -36,23 +36,28 @@ void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj) {
   gtk_entry_set_text(entry, entry_buffer);
 }
 
+void get_entry_adjustment(GtkEntry *target, GtkAdjustment *adj);
+
 // TODO: refactor to separated method for duplicates?
 void read_entry_on_change(GtkEntry *target, widgets_controls* ctrls) {
-  if (target == ctrls->e_trans_x) {
-    set_adjustment_from_entry(ctrls->e_trans_x, ctrls->adj_trans_x);
-  } else if (target == ctrls->e_trans_y) {
-    set_adjustment_from_entry(ctrls->e_trans_y, ctrls->adj_trans_y);
-  } else if (target == ctrls->e_trans_z) {
-    set_adjustment_from_entry(ctrls->e_trans_z, ctrls->adj_trans_z);
-  } else if (target == ctrls->e_rotat_x) {
-    set_adjustment_from_entry(ctrls->e_rotat_x, ctrls->adj_rotat_x);
-  } else if (target == ctrls->e_rotat_y) {
-    set_adjustment_from_entry(ctrls->e_rotat_y, ctrls->adj_rotat_y);
-  } else if (target == ctrls->e_rotat_z) {
-    set_adjustment_from_entry(ctrls->e_rotat_z, ctrls->adj_rotat_z);
-  } else if (target == ctrls->e_scale) {
-    set_adjustment_from_entry(ctrls->e_scale, ctrls->adj_scale);
+  controls_group c_group;
+  if (target == ctrls->trans_x.entry) {
+    c_group = ctrls->trans_x;
+  } else if (target == ctrls->trans_y.entry) {
+    c_group = ctrls->trans_y;
+  } else if (target == ctrls->trans_z.entry) {
+    c_group = ctrls->trans_z;
+  } else if (target == ctrls->rotat_x.entry) {
+    c_group = ctrls->rotat_x;
+  } else if (target == ctrls->rotat_y.entry) {
+    c_group = ctrls->rotat_y;
+  } else if (target == ctrls->rotat_z.entry) {
+    c_group = ctrls->rotat_z;
+  } else if (target == ctrls->scale.entry) {
+    c_group = ctrls->scale;
   }
+
+  set_adjustment_from_entry(c_group.entry, c_group.adj);
 }
 
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj) {
@@ -73,6 +78,11 @@ void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj) {
   }
 }
 
+double get_adjustment_range(GtkAdjustment *adj) {
+  return (gtk_adjustment_get_upper(adj) -
+          gtk_adjustment_get_lower(adj));
+}
+
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value) {
   if (type == INC_FLAT) {
     gtk_adjustment_set_value(
@@ -81,14 +91,12 @@ void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value) {
     gtk_adjustment_set_value(
         adj, (gtk_adjustment_get_value(adj) - shift_value));
   } else if (type == INC_MUL) {
-    double range = gtk_adjustment_get_upper(adj) -
-                   gtk_adjustment_get_lower(adj);
+    double range = get_adjustment_range(adj);
     gtk_adjustment_set_value(adj,
                              (gtk_adjustment_get_value(adj) +
                               (shift_value * range)));
   } else if (type == DEC_MUL) {
-    double range = gtk_adjustment_get_upper(adj) -
-                   gtk_adjustment_get_lower(adj);
+    double range = get_adjustment_range(adj);
     gtk_adjustment_set_value(adj,
                              (gtk_adjustment_get_value(adj) -
                               (shift_value * range)));
@@ -148,11 +156,11 @@ gboolean keyval_compare(uint ref, ...) {
 }
 
 void reset_scale(widgets_controls *ctrl) {
-  shift_adjustment(ctrl->adj_trans_x, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_trans_y, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_trans_z, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_rotat_x, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_rotat_y, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_rotat_z, SET_TO_VAL, 0);
-  shift_adjustment(ctrl->adj_scale, SET_TO_VAL, 10);
+  shift_adjustment(ctrl->trans_x.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->trans_y.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->trans_z.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->rotat_x.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->rotat_y.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->rotat_z.adj, SET_TO_VAL, 0);
+  shift_adjustment(ctrl->scale.adj, SET_TO_VAL, 10);
 }

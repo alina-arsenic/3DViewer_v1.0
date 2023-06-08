@@ -36,95 +36,102 @@ void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
 
   ctrls->trans_grid_menu = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "grid_menu_translation"));
-  ctrls->b_trans_x_l = GTK_WIDGET(
+
+  ctrls->trans_x.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_l"));
-  ctrls->b_trans_x_r = GTK_WIDGET(
+  ctrls->trans_x.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_r"));
-  ctrls->b_trans_x_reset = GTK_WIDGET(
+  ctrls->trans_x.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_x_reset"));
-  ctrls->e_trans_x = GTK_ENTRY(
+  ctrls->trans_x.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_translation_x"));
-  ctrls->s_trans_x = GTK_WIDGET(
+  ctrls->trans_x.scale = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "scale_translation_x"));
-  ctrls->adj_trans_x = GTK_ADJUSTMENT(
+  ctrls->trans_x.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_translation_x"));
-  ctrls->b_trans_y_l = GTK_WIDGET(
+
+  ctrls->trans_y.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_l"));
-  ctrls->b_trans_y_r = GTK_WIDGET(
+  ctrls->trans_y.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_r"));
-  ctrls->b_trans_y_reset = GTK_WIDGET(
+  ctrls->trans_y.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_y_reset"));
-  ctrls->e_trans_y = GTK_ENTRY(
+  ctrls->trans_y.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_translation_y"));
-  ctrls->s_trans_y = GTK_WIDGET(
+  ctrls->trans_y.scale = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "scale_translation_y"));
-  ctrls->adj_trans_y = GTK_ADJUSTMENT(
+  ctrls->trans_y.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_translation_y"));
-  ctrls->b_trans_z_l = GTK_WIDGET(
+
+  ctrls->trans_z.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_l"));
-  ctrls->b_trans_z_r = GTK_WIDGET(
+  ctrls->trans_z.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_r"));
-  ctrls->b_trans_z_reset = GTK_WIDGET(
+  ctrls->trans_z.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_translation_z_reset"));
-  ctrls->e_trans_z = GTK_ENTRY(
+  ctrls->trans_z.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_translation_z"));
-  ctrls->s_trans_z = GTK_WIDGET(
+  ctrls->trans_z.scale = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "scale_translation_z"));
-  ctrls->adj_trans_z = GTK_ADJUSTMENT(
+  ctrls->trans_z.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_translation_z"));
 
   ctrls->rotat_grid_menu = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "grid_menu_rotation"));
-  ctrls->b_rotat_x_l = GTK_WIDGET(
+
+  ctrls->rotat_x.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_l"));
-  ctrls->b_rotat_x_r = GTK_WIDGET(
+  ctrls->rotat_x.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_r"));
-  ctrls->b_rotat_x_reset = GTK_WIDGET(
+  ctrls->rotat_x.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_x_reset"));
-  ctrls->e_rotat_x = GTK_ENTRY(
+  ctrls->rotat_x.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_rotation_x"));
-  ctrls->s_rotat_x = GTK_WIDGET(
-      gtk_builder_get_object(w_core->ui_builder, "scale_rotating_x"));
-  ctrls->adj_rotat_x = GTK_ADJUSTMENT(
+  ctrls->rotat_x.scale = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "scale_rotation_x"));
+  ctrls->rotat_x.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_rotation_x"));
-  ctrls->b_rotat_y_l = GTK_WIDGET(
+
+  ctrls->rotat_y.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_l"));
-  ctrls->b_rotat_y_r = GTK_WIDGET(
+  ctrls->rotat_y.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_r"));
-  ctrls->b_rotat_y_reset = GTK_WIDGET(
+  ctrls->rotat_y.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_y_reset"));
-  ctrls->e_rotat_y = GTK_ENTRY(
+  ctrls->rotat_y.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_rotation_y"));
-  ctrls->s_rotat_y = GTK_WIDGET(
-      gtk_builder_get_object(w_core->ui_builder, "scale_rotating_y"));
-  ctrls->adj_rotat_y = GTK_ADJUSTMENT(
+  ctrls->rotat_y.scale = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "scale_rotation_y"));
+  ctrls->rotat_y.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_rotation_y"));
-  ctrls->b_rotat_z_l = GTK_WIDGET(
+
+  ctrls->rotat_z.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_l"));
-  ctrls->b_rotat_z_r = GTK_WIDGET(
+  ctrls->rotat_z.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_r"));
-  ctrls->b_rotat_z_reset = GTK_WIDGET(
+  ctrls->rotat_z.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_rotation_z_reset"));
-  ctrls->e_rotat_z = GTK_ENTRY(
+  ctrls->rotat_z.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_rotation_z"));
-  ctrls->s_rotat_z = GTK_WIDGET(
-      gtk_builder_get_object(w_core->ui_builder, "scale_rotating_z"));
-  ctrls->adj_rotat_z = GTK_ADJUSTMENT(
+  ctrls->rotat_z.scale = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "scale_rotation_z"));
+  ctrls->rotat_z.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_rotation_z"));
 
   ctrls->scale_grid_menu = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "grid_menu_scale"));
-  ctrls->b_scale_l = GTK_WIDGET(
+
+  ctrls->scale.b_left = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_scaling_l"));
-  ctrls->b_scale_r = GTK_WIDGET(
+  ctrls->scale.b_right = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_scaling_r"));
-  ctrls->b_scale_reset = GTK_WIDGET(
+  ctrls->scale.b_reset = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "button_scaling_reset"));
-  ctrls->e_scale = GTK_ENTRY(
+  ctrls->scale.entry = GTK_ENTRY(
       gtk_builder_get_object(w_core->ui_builder, "entry_scaling"));
-  ctrls->s_scale = GTK_WIDGET(
+  ctrls->scale.scale = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "scale_scaling"));
-  ctrls->adj_scale = GTK_ADJUSTMENT(
+  ctrls->scale.adj = GTK_ADJUSTMENT(
       gtk_builder_get_object(w_core->ui_builder, "adj_scaling"));
 
   ctrls->b_hide_ctrl =  GTK_WIDGET(
@@ -134,14 +141,31 @@ void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
 }
 
 void entry_init(widgets_controls* ctrls) {
-  on_adj_trans_changed(NULL, ctrls);
-  on_adj_rotat_changed(NULL, ctrls);
-  on_adj_scale_changed(NULL, ctrls);
+  on_adj_changed(NULL, &ctrls->trans_x);
+  on_adj_changed(NULL, &ctrls->trans_y);
+  on_adj_changed(NULL, &ctrls->trans_z);
+  on_adj_changed(NULL, &ctrls->rotat_x);
+  on_adj_changed(NULL, &ctrls->rotat_y);
+  on_adj_changed(NULL, &ctrls->rotat_z);
+  on_adj_changed(NULL, &ctrls->scale);
 }
 
 void glarea_init(widgets_core* w_core, render_data *render) {
   render->glarea = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "gl_drawing_area"));
+}
+
+void connect_control_group(controls_group *ctrl_group) {
+  g_signal_connect(ctrl_group->adj, "value-changed",
+                   G_CALLBACK(on_adj_changed), ctrl_group);
+  g_signal_connect(ctrl_group->b_left, "pressed",
+                   G_CALLBACK(on_btn_pressed_left), ctrl_group);
+  g_signal_connect(ctrl_group->b_right, "pressed",
+                   G_CALLBACK(on_btn_pressed_right), ctrl_group);
+  g_signal_connect(ctrl_group->b_reset, "pressed",
+                   G_CALLBACK(on_btn_pressed_reset), ctrl_group);
+  g_signal_connect(ctrl_group->entry, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrl_group);
 }
 
 void signals_connect(
@@ -160,97 +184,16 @@ void signals_connect(
                    G_CALLBACK(on_btn_pressed_help), w_core);
   g_signal_connect(w_core->window_main, "key_press_event",
                    G_CALLBACK(on_key_press), ctrls);
-  g_signal_connect(ctrls->adj_trans_x, "value-changed",
-                   G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(ctrls->adj_trans_y, "value-changed",
-                   G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(ctrls->adj_trans_z, "value-changed",
-                   G_CALLBACK(on_adj_trans_changed), ctrls);
-  g_signal_connect(ctrls->adj_rotat_x, "value-changed",
-                   G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(ctrls->adj_rotat_y, "value-changed",
-                   G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(ctrls->adj_rotat_z, "value-changed",
-                   G_CALLBACK(on_adj_rotat_changed), ctrls);
-  g_signal_connect(ctrls->adj_scale, "value-changed",
-                   G_CALLBACK(on_adj_scale_changed), ctrls);
 
-  g_signal_connect(ctrls->b_trans_x_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_x_l), ctrls);
-  g_signal_connect(ctrls->b_trans_x_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_x_r), ctrls);
-  g_signal_connect(ctrls->b_trans_x_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_x_reset), ctrls);
-  g_signal_connect(ctrls->b_trans_y_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_y_l), ctrls);
-  g_signal_connect(ctrls->b_trans_y_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_y_r), ctrls);
-  g_signal_connect(ctrls->b_trans_y_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_y_reset), ctrls);
-  g_signal_connect(ctrls->b_trans_z_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_z_l), ctrls);
-  g_signal_connect(ctrls->b_trans_z_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_z_r), ctrls);
-  g_signal_connect(ctrls->b_trans_z_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_trans_z_reset), ctrls);
+  connect_control_group(&ctrls->trans_x);
+  connect_control_group(&ctrls->trans_y);
+  connect_control_group(&ctrls->trans_z);
 
-  g_signal_connect(ctrls->b_rotat_x_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_x_l), ctrls);
-  g_signal_connect(ctrls->b_rotat_x_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_x_r), ctrls);
-  g_signal_connect(ctrls->b_rotat_x_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_x_reset), ctrls);
-  g_signal_connect(ctrls->b_rotat_y_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_y_l), ctrls);
-  g_signal_connect(ctrls->b_rotat_y_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_y_r), ctrls);
-  g_signal_connect(ctrls->b_rotat_y_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_y_reset), ctrls);
-  g_signal_connect(ctrls->b_rotat_z_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_z_l), ctrls);
-  g_signal_connect(ctrls->b_rotat_z_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_z_r), ctrls);
-  g_signal_connect(ctrls->b_rotat_z_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_rotat_z_reset), ctrls);
+  connect_control_group(&ctrls->rotat_x);
+  connect_control_group(&ctrls->rotat_y);
+  connect_control_group(&ctrls->rotat_z);
 
-  g_signal_connect(ctrls->b_scale_l, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_scale_l), ctrls);
-  g_signal_connect(ctrls->b_scale_r, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_scale_r), ctrls);
-  g_signal_connect(ctrls->b_scale_reset, "pressed",
-                   G_CALLBACK(on_btn_pressed_b_scale_reset), ctrls);
-
-  g_signal_connect(ctrls->e_trans_x, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-  g_signal_connect(ctrls->e_trans_y, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-  g_signal_connect(ctrls->e_trans_z, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-
-  g_signal_connect(ctrls->e_rotat_x, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-  g_signal_connect(ctrls->e_rotat_y, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-  g_signal_connect(ctrls->e_rotat_z, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-
-  g_signal_connect(ctrls->e_scale, "focus-out-event",
-                   G_CALLBACK(on_entry_focus_out_event), ctrls);
-
-//  g_signal_connect(
-//      ctrls->e_trans_x, "changed", G_CALLBACK(on_entry_trans_x_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_trans_y, "changed", G_CALLBACK(on_entry_trans_y_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_trans_z, "changed", G_CALLBACK(on_entry_trans_z_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_rotat_x, "changed", G_CALLBACK(on_entry_rotat_x_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_rotat_y, "changed", G_CALLBACK(on_entry_rotat_y_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_rotat_z, "changed", G_CALLBACK(on_entry_rotat_z_changed), ctrls);
-//  g_signal_connect(
-//      ctrls->e_scale, "changed", G_CALLBACK(on_entry_scale_changed), ctrls);
+  connect_control_group(&ctrls->scale);
 }
 
 void glarea_signals_connect(render_data *render, widgets_controls *ctrls) {

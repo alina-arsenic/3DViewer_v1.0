@@ -41,168 +41,57 @@ gboolean on_key_press(
       read_entry_on_change(GTK_ENTRY(target), p_ctrl);
     }
   } else if (is_key(key, 'A')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_x_l(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_x_l(NULL, p_ctrl);
+    on_btn_pressed_left(
+        NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
   } else if (is_key(key, 'D')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_x_r(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_x_r(NULL, p_ctrl);
+    on_btn_pressed_right(
+        NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
   } else if (is_key(key, 'S')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_y_l(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_y_l(NULL, p_ctrl);
+    on_btn_pressed_left(
+        NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
   } else if (is_key(key, 'W')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_y_r(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_y_r(NULL, p_ctrl);
+    on_btn_pressed_right(
+        NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
   } else if (is_key(key, 'Q')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_z_l(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_z_l(NULL, p_ctrl);
+    on_btn_pressed_left(
+        NULL, ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
   } else if (is_key(key, 'E')) {
-    ctrl_pressed ?
-                 on_btn_pressed_b_rotat_z_r(NULL, p_ctrl) :
-                 on_btn_pressed_b_trans_z_r(NULL, p_ctrl);
+    on_btn_pressed_right(
+        NULL,ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
   } else if (is_key(key, '-')) {
-    on_btn_pressed_b_scale_l(NULL, p_ctrl);
+    on_btn_pressed_left(NULL, &p_ctrl->scale);
   } else if (is_key(key, '+')) {
-    on_btn_pressed_b_scale_r(NULL, p_ctrl);
+    on_btn_pressed_right(NULL, &p_ctrl->scale);
   } else if (is_key(key, 'R')) {
     reset_scale(p_ctrl);
   }
   return FALSE;
 }
 
-void on_adj_trans_changed(GtkAdjustment *adj, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  set_entry_from_adjust(p_ctrl->e_trans_x, p_ctrl->adj_trans_x);
-  set_entry_from_adjust(p_ctrl->e_trans_y, p_ctrl->adj_trans_y);
-  set_entry_from_adjust(p_ctrl->e_trans_z, p_ctrl->adj_trans_z);
+void on_adj_changed(GtkAdjustment *adj, gpointer user_data) {
+  controls_group *p_ctrl = user_data;
+  set_entry_from_adjust(p_ctrl->entry, p_ctrl->adj);
 }
 
-
-void on_adj_rotat_changed(GtkAdjustment *adj, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  set_entry_from_adjust(p_ctrl->e_rotat_x, p_ctrl->adj_rotat_x);
-  set_entry_from_adjust(p_ctrl->e_rotat_y, p_ctrl->adj_rotat_y);
-  set_entry_from_adjust(p_ctrl->e_rotat_z, p_ctrl->adj_rotat_z);
+void on_btn_pressed_left(GtkButton *button, gpointer user_data) {
+  controls_group *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj, DEC_MUL, CTRL_MUL);
 }
 
-void on_adj_scale_changed(GtkAdjustment *adj, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  set_entry_from_adjust(p_ctrl->e_scale, p_ctrl->adj_scale);
+void on_btn_pressed_right(GtkButton *button, gpointer user_data) {
+  controls_group *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj, INC_MUL, CTRL_MUL);
 }
 
-void on_btn_pressed_b_trans_x_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_x, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_x_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_x, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_x_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_x, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_trans_y_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_y, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_y_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_y, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_y_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_y, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_trans_z_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_z, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_z_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_z, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_trans_z_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_trans_z, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_rotat_x_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_x, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_x_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_x, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_x_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_x, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_rotat_y_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_y, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_y_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_y, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_y_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_y, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_rotat_z_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_z, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_z_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_z, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_rotat_z_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_rotat_z, SET_TO_VAL, 0);
-}
-
-void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_scale, DEC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_scale, INC_MUL, CTRL_MUL);
-}
-
-void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  shift_adjustment(p_ctrl->adj_scale, SET_TO_VAL, 10);
+void on_btn_pressed_reset(GtkButton *button, gpointer user_data) {
+  controls_group *p_ctrl = user_data;
+  shift_adjustment(p_ctrl->adj, SET_TO_VAL, 0);
 }
 
 void on_entry_focus_out_event(
     GtkWidget *entry, GdkEventFocus *event, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
-  read_entry_on_change(GTK_ENTRY(entry), p_ctrl);
+  controls_group *p_ctrl = user_data;
+  set_adjustment_from_entry(p_ctrl->entry, p_ctrl->adj);
 }
 
 //********************** GLArea events ***************************************//
@@ -296,7 +185,7 @@ gboolean on_glarea_scroll(
   }
 
   //////////// FIXME: Just to test, insert implementation here
-  shift_adjustment(p_ctrl->adj_scale, INC_FLAT, panning.z);
+  shift_adjustment(p_ctrl->scale.adj, INC_FLAT, panning.z);
   panning.z = 0;
   printf("Mouse scroll state = z = %lf\n", panning.z);
   ////////////
@@ -319,10 +208,10 @@ gboolean on_glarea_button_press(
   }
 
   //////////// FIXME: Just to test, insert implementation here
-  panning.buf_x_t = gtk_adjustment_get_value(p_ctrl->adj_trans_x);
-  panning.buf_y_t = gtk_adjustment_get_value(p_ctrl->adj_trans_y);
-  panning.buf_x_r = gtk_adjustment_get_value(p_ctrl->adj_rotat_x);
-  panning.buf_y_r = gtk_adjustment_get_value(p_ctrl->adj_rotat_y);
+  panning.buf_x_t = gtk_adjustment_get_value(p_ctrl->trans_x.adj);
+  panning.buf_y_t = gtk_adjustment_get_value(p_ctrl->trans_y.adj);
+  panning.buf_x_r = gtk_adjustment_get_value(p_ctrl->rotat_x.adj);
+  panning.buf_y_r = gtk_adjustment_get_value(p_ctrl->rotat_y.adj);
 
   printf("Mouse init place = x = %lf y = %lf\n", panning.x, panning.y);
   /////////
@@ -352,12 +241,12 @@ gboolean on_glarea_motion_notify(
 
   //////////// FIXME: Just to test, insert implementation here
   if (panning.button == RMB) {
-    shift_adjustment(p_ctrl->adj_trans_x, SET_TO_VAL, panning.buf_x_t + panning.dx);
-    shift_adjustment(p_ctrl->adj_trans_y, SET_TO_VAL, panning.buf_y_t + panning.dy);
+    shift_adjustment(p_ctrl->trans_x.adj, SET_TO_VAL, panning.buf_x_t + panning.dx);
+    shift_adjustment(p_ctrl->trans_y.adj, SET_TO_VAL, panning.buf_y_t + panning.dy);
   } else if (panning.button == LMB) {
-    shift_adjustment(p_ctrl->adj_rotat_x, SET_TO_VAL,
+    shift_adjustment(p_ctrl->rotat_x.adj, SET_TO_VAL,
                      panning.buf_x_r + panning.dx);
-    shift_adjustment(p_ctrl->adj_rotat_y, SET_TO_VAL,
+    shift_adjustment(p_ctrl->rotat_y.adj, SET_TO_VAL,
                      panning.buf_y_r + panning.dy);
   }
   printf("Mouse new place = x = %lf y = %lf\n", panning.x, panning.y);
