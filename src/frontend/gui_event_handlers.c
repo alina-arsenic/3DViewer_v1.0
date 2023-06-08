@@ -307,6 +307,8 @@ gboolean on_glarea_button_press(
     GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   GtkAllocation allocation;
+
+  gtk_widget_grab_focus(widget);
   gtk_widget_get_allocation(widget, &allocation);
   if (event->button == LMB || event->button == MMB || event->button == RMB) {
     panning.button = event->button;
