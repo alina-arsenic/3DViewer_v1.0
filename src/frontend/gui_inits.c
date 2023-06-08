@@ -25,6 +25,9 @@ void builder_init(widgets_core* w_core, const char* path_xml) {
       gtk_builder_get_object(w_core->ui_builder, "window_main"));
   w_core->window_help = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "window_help"));
+  // add event to main window to handle focus changing(for entry ports)
+  gtk_widget_add_events(
+      w_core->window_main, GDK_FOCUS_CHANGE_MASK);
 }
 
 void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
@@ -217,6 +220,23 @@ void signals_connect(
   g_signal_connect(ctrls->b_scale_reset, "pressed",
                    G_CALLBACK(on_btn_pressed_b_scale_reset), ctrls);
 
+  g_signal_connect(ctrls->e_trans_x, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+  g_signal_connect(ctrls->e_trans_y, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+  g_signal_connect(ctrls->e_trans_z, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+
+  g_signal_connect(ctrls->e_rotat_x, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+  g_signal_connect(ctrls->e_rotat_y, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+  g_signal_connect(ctrls->e_rotat_z, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+
+  g_signal_connect(ctrls->e_scale, "focus-out-event",
+                   G_CALLBACK(on_entry_focus_out_event), ctrls);
+
 //  g_signal_connect(
 //      ctrls->e_trans_x, "changed", G_CALLBACK(on_entry_trans_x_changed), ctrls);
 //  g_signal_connect(
@@ -263,5 +283,8 @@ void set_css_style(widgets_core* w_core, const char* path_css) {
     g_critical("Cant find css file : %s", w_core->err->message);
     g_error_free(w_core->err);
   }
-  gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider_file), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  gtk_style_context_add_provider_for_screen(
+      gdk_screen_get_default(),
+      GTK_STYLE_PROVIDER(provider_file),
+      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }

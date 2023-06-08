@@ -37,21 +37,20 @@ void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj) {
 }
 
 // TODO: refactor to separated method for duplicates?
-void read_entry_on_return_key(GtkWidget *window, widgets_controls* ctrls) {
-  GtkWidget *target = gtk_window_get_focus(GTK_WINDOW(window));
-  if (target == GTK_WIDGET(ctrls->e_trans_x)) {
+void read_entry_on_change(GtkEntry *target, widgets_controls* ctrls) {
+  if (target == ctrls->e_trans_x) {
     set_adjustment_from_entry(ctrls->e_trans_x, ctrls->adj_trans_x);
-  } else if (target == GTK_WIDGET(ctrls->e_trans_y)) {
+  } else if (target == ctrls->e_trans_y) {
     set_adjustment_from_entry(ctrls->e_trans_y, ctrls->adj_trans_y);
-  } else if (target == GTK_WIDGET(ctrls->e_trans_z)) {
+  } else if (target == ctrls->e_trans_z) {
     set_adjustment_from_entry(ctrls->e_trans_z, ctrls->adj_trans_z);
-  } else if (target == GTK_WIDGET(ctrls->e_rotat_x)) {
+  } else if (target == ctrls->e_rotat_x) {
     set_adjustment_from_entry(ctrls->e_rotat_x, ctrls->adj_rotat_x);
-  } else if (target == GTK_WIDGET(ctrls->e_rotat_y)) {
+  } else if (target == ctrls->e_rotat_y) {
     set_adjustment_from_entry(ctrls->e_rotat_y, ctrls->adj_rotat_y);
-  } else if (target == GTK_WIDGET(ctrls->e_rotat_z)) {
+  } else if (target == ctrls->e_rotat_z) {
     set_adjustment_from_entry(ctrls->e_rotat_z, ctrls->adj_rotat_z);
-  } else if (target == GTK_WIDGET(ctrls->e_scale)) {
+  } else if (target == ctrls->e_scale) {
     set_adjustment_from_entry(ctrls->e_scale, ctrls->adj_scale);
   }
 }

@@ -36,7 +36,10 @@ gboolean on_key_press(
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   printf("Pressed key: %d\n", event->keyval);
   if (key == GDK_KEY_Return) {
-    read_entry_on_return_key(window, p_ctrl);
+    GtkWidget *target = gtk_window_get_focus(GTK_WINDOW(window));
+    if (GTK_IS_ENTRY(target)) {
+      read_entry_on_change(GTK_ENTRY(target), p_ctrl);
+    }
   } else if (is_key(key, 'A')) {
     ctrl_pressed ?
                  on_btn_pressed_b_rotat_x_l(NULL, p_ctrl) :
@@ -196,6 +199,11 @@ void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data) {
   shift_adjustment(p_ctrl->adj_scale, SET_TO_VAL, 10);
 }
 
+void on_entry_focus_out_event(
+    GtkWidget *entry, GdkEventFocus *event, gpointer user_data) {
+  widgets_controls *p_ctrl = user_data;
+  read_entry_on_change(GTK_ENTRY(entry), p_ctrl);
+}
 
 //********************** GLArea events ***************************************//
 
@@ -213,9 +221,17 @@ void on_glarea_realize(GtkGLArea *glarea) {
   ;
 }
 
+void testdraw(GtkGLArea *self) {
+  /* draw the three vertices as a triangle */
+  glDrawArrays (GL_TRIANGLES, 0, 3);
+
+}
+
+
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context) {
   // Clear canvas:
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  testdraw(glarea);
 //
 //  // Draw background:
 //  background_draw();

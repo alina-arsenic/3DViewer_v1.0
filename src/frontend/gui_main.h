@@ -197,6 +197,9 @@ void on_btn_pressed_b_scale_l(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_r(GtkButton *button, gpointer user_data);
 void on_btn_pressed_b_scale_reset(GtkButton *button, gpointer user_data);
 
+void on_entry_focus_out_event(
+    GtkWidget *entry, GdkEventFocus *event, gpointer user_data);
+
 void on_glarea_realize(GtkGLArea *glarea);
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context);
 void on_glarea_resize(GtkGLArea *area, gint width, gint height);
@@ -215,7 +218,7 @@ gboolean on_glarea_motion_notify(
 void on_main_window_resize(GtkWindow* window, gpointer user_data);
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
-void read_entry_on_return_key(GtkWidget *window, widgets_controls* ctrls);
+void read_entry_on_change(GtkEntry *target, widgets_controls* ctrls);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 gboolean keyval_compare(uint ref, ...);
