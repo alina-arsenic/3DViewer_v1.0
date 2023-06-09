@@ -1233,7 +1233,7 @@ combobox > .linked:not(.vertical) > entry:not(:only-child):last-child {
 combobox > .linked:not(.vertical) > button:not(:only-child) {
   min-height: 16px;
   min-width: 16px;
-  margin: 6px;
+  margin: 0px;
   padding: 4px;
   border-radius: 9999px;
 }
