@@ -32,7 +32,7 @@ void on_btn_pressed_help(GtkButton *button, gpointer user_data) {
 gboolean on_key_press(
     GtkWidget *window, GdkEventKey *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
-  uint key = event->keyval;
+  unsigned int key = event->keyval;
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   printf("Pressed key: %d\n", event->keyval);
   if (key == GDK_KEY_Return) {
@@ -118,15 +118,13 @@ void testdraw(GtkGLArea *self) {
 
 
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context) {
+
   // Clear canvas:
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  testdraw(glarea);
-//
-//  // Draw background:
-//  background_draw();
-//
-//  // Draw model:
-//  model_draw();
+	glClearColor(0.15f, 0.15f, 0.15f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  // Draw model:
+  //  model_draw();
 
   // Don't propagate signal:
   return TRUE;

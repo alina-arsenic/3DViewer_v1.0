@@ -109,7 +109,7 @@ void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value) {
   }
 }
 
-gboolean is_key(uint keyval, char key) {
+gboolean is_key(unsigned int keyval, char key) {
   gboolean res = FALSE;
   if (key == 'A') {
     res = keyval_compare(keyval, GDK_KEY_A, GDK_KEY_a, GDK_KEY_Cyrillic_ef,
@@ -141,14 +141,14 @@ gboolean is_key(uint keyval, char key) {
   return (res);
 }
 
-gboolean keyval_compare(uint ref, ...) {
+gboolean keyval_compare(unsigned int ref, ...) {
   va_list marker;
-  uint buffer = ref;
+  unsigned int buffer = ref;
   gboolean equal = FALSE;
   va_start(marker, ref);
 
   while (buffer != 0 && !equal) {
-    buffer = va_arg(marker, uint);
+    buffer = va_arg(marker, unsigned int);
     equal = (ref == buffer) ? TRUE : FALSE;
   }
   va_end(marker);
