@@ -24,7 +24,10 @@
 #define ENTRY_BUFFER_SIZE  255      /*!< Size of buffer for entry boxes */
 #define FILENAME_LENGTH    4096     /*!< Max length of filename in Linux OS */
 
-#include <GL/gl.h>
+// GLEW
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 #include <gtk-3.0/gtk/gtk.h>
 
 /**
@@ -79,6 +82,9 @@ typedef struct Widgets_controls {
 
 typedef struct Render_data {
   GtkWidget *glarea;                 /*!< Area to render 3D object */
+
+  GLuint shaderProgram;
+  GLuint VAO;
 
   int width;
   int height;
@@ -153,8 +159,8 @@ void on_btn_pressed_reset(GtkButton *button, gpointer user_data);
 void on_entry_focus_out_event(
     GtkWidget *entry, GdkEventFocus *event, gpointer user_data);
 
-void on_glarea_realize(GtkGLArea *glarea);
-gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context);
+void on_glarea_realize(GtkGLArea *glarea, gpointer user_data);
+gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context, gpointer user_data);
 void on_glarea_resize(GtkGLArea *area, gint width, gint height);
 gboolean on_glarea_scroll(
     GtkWidget* widget, GdkEventScroll *event, gpointer user_data);
@@ -175,8 +181,14 @@ void read_entry_on_change(GtkEntry *target, widgets_controls *ctrls);
 void set_adjustment_from_entry(GtkEntry *entry, GtkAdjustment *adj);
 double get_adjustment_range(GtkAdjustment *adj);
 void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
-gboolean keyval_compare(uint ref, ...);
-gboolean is_key(uint keyval, char key);
+gboolean keyval_compare(unsigned int ref, ...);
+gboolean is_key(unsigned int keyval, char key);
 void reset_scale(widgets_controls *ctrl);
+
+
+//******************************* MODEL ************************************//
+int shader_compiler(GLuint *shaderProgram, char *infoLog);
+void buffer_binder(GLuint *VAO);
+
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H

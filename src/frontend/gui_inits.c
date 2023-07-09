@@ -205,9 +205,9 @@ void glarea_signals_connect(render_data *render, widgets_controls *ctrls) {
   gtk_widget_add_events(render->glarea, GDK_BUTTON2_MOTION_MASK);
   gtk_widget_add_events(render->glarea, GDK_BUTTON3_MOTION_MASK);
 
-  g_signal_connect(render->glarea, "realize", G_CALLBACK(on_glarea_realize), 0);
-  g_signal_connect(render->glarea, "render", G_CALLBACK(on_glarea_render), 0);
-  g_signal_connect(render->glarea, "resize", G_CALLBACK(on_glarea_resize), 0);
+  g_signal_connect(render->glarea, "realize", G_CALLBACK(on_glarea_realize), render);
+  g_signal_connect(render->glarea, "render", G_CALLBACK(on_glarea_render), render);
+  g_signal_connect(render->glarea, "resize", G_CALLBACK(on_glarea_resize), render);
 
   g_signal_connect(render->glarea, "scroll-event",
                    G_CALLBACK(on_glarea_scroll), ctrls);

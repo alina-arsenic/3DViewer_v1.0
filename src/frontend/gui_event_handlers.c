@@ -106,32 +106,40 @@ void on_main_window_resize(GtkWindow* window, gpointer user_data) {
       p_render->glarea, p_render->width, p_render->height);
 }
 
-void on_glarea_realize(GtkGLArea *glarea) {
-  ;
+void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
+  render_data *render = user_data;
+  gtk_gl_area_make_current(glarea);
+  glewExperimental = GL_TRUE;
+  glewInit();
+  glEnable(GL_DEPTH_TEST);
+
+  char infoLog[512];
+  if (shader_compiler(&render->shaderProgram, infoLog)) {
+    printf("ERROR: %s\n", infoLog);
+  }
+  buffer_binder(&render->VAO);
 }
 
-void testdraw(GtkGLArea *self) {
-  /* draw the three vertices as a triangle */
-  glDrawArrays (GL_TRIANGLES, 0, 3);
-
-}
-
-
-gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context) {
-
+gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context, gpointer user_data) {
+  render_data *render = user_data;
+  
   // Clear canvas:
 	glClearColor(0.15f, 0.15f, 0.15f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // Draw model:
-  //  model_draw();
+  glUseProgram(render->shaderProgram);
+  glBindVertexArray(render->VAO);
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+  glBindVertexArray(0);
+
+  glUseProgram (0);
+  glFlush();
 
   // Don't propagate signal:
   return TRUE;
 }
 
 void on_glarea_resize(GtkGLArea *area, gint width, gint height) {
-  ;
 }
 
 
