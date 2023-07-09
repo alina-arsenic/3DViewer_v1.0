@@ -109,6 +109,7 @@ void on_main_window_resize(GtkWindow* window, gpointer user_data) {
 void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
   render_data *render = user_data;
   gtk_gl_area_make_current(glarea);
+  gtk_gl_area_set_has_depth_buffer(glarea, TRUE);
   glewExperimental = GL_TRUE;
   glewInit();
   glEnable(GL_DEPTH_TEST);
@@ -122,17 +123,10 @@ void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
 
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context, gpointer user_data) {
   render_data *render = user_data;
-  
-  // Clear canvas:
+
 	glClearColor(0.15f, 0.15f, 0.15f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  glUseProgram(render->shaderProgram);
-  glBindVertexArray(render->VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-  glBindVertexArray(0);
-
-  glUseProgram (0);
+  draw_model(render);
   glFlush();
 
   // Don't propagate signal:

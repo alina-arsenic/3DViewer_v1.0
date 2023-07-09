@@ -86,6 +86,8 @@ typedef struct Render_data {
   GLuint shaderProgram;
   GLuint VAO;
 
+  widgets_controls *ctrls;
+
   int width;
   int height;
 }render_data;
@@ -187,8 +189,10 @@ void reset_scale(widgets_controls *ctrl);
 
 
 //******************************* MODEL ************************************//
+
 int shader_compiler(GLuint *shaderProgram, char *infoLog);
 void buffer_binder(GLuint *VAO);
+void draw_model(render_data *render);
 
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H
