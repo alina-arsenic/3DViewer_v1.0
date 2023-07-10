@@ -85,6 +85,7 @@ typedef struct Render_data {
 
   GLuint shaderProgram;
   GLuint VAO;
+  GdkFrameClock *frame_clock;
 
   widgets_controls *ctrls;
 

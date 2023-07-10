@@ -139,10 +139,14 @@ void buffer_binder(GLuint *VAO) {
 
 void draw_model(render_data *render) {
 
+    double buf_x_r = gtk_adjustment_get_value(render->ctrls->rotat_x.adj);
+    double buf_y_r = gtk_adjustment_get_value(render->ctrls->rotat_y.adj);
+
     mat4 model;
-    vec3 a = {0.0f, 0.0f, 0.0f}, b = {1.0f, 0.5f, 1.0f}, d = {0.0f, 0.0f, -3.0f};
+    vec3 a = {0.0f, 0.0f, 0.0f}, b = {1.0f, 0.0f, 0.0f}, c = {0.0f, 1.0f, 0.0f}, d = {0.0f, 0.0f, -3.0f};
     glm_translate_make(model, a);
-    glm_rotate(model, 5.0f, b);  // <--- need to make rotate!!
+    glm_rotate(model, (GLfloat)buf_x_r / -50.0f, c);
+    glm_rotate(model, (GLfloat)buf_y_r / -50.0f, b);
 
     mat4 view;
     glm_translate_make(view, a);

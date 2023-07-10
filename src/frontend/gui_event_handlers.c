@@ -108,8 +108,8 @@ void on_main_window_resize(GtkWindow* window, gpointer user_data) {
 
 void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
   render_data *render = user_data;
-  gtk_gl_area_make_current(glarea);
-  gtk_gl_area_set_has_depth_buffer(glarea, TRUE);
+  gtk_gl_area_make_current(GTK_GL_AREA(render->glarea));
+  gtk_gl_area_set_has_depth_buffer(GTK_GL_AREA(render->glarea), TRUE);
   glewExperimental = GL_TRUE;
   glewInit();
   glEnable(GL_DEPTH_TEST);
@@ -119,6 +119,23 @@ void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
     printf("ERROR: %s\n", infoLog);
   }
   buffer_binder(&render->VAO);
+
+  // Get frame clock:
+	GdkGLContext *glcontext = gtk_gl_area_get_context(GTK_GL_AREA(render->glarea));
+	GdkWindow *glwindow = gdk_gl_context_get_window(glcontext);
+	GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
+
+	// Connect update signal:
+	g_signal_connect_swapped
+		( frame_clock
+		, "update"
+		, G_CALLBACK(gtk_gl_area_queue_render)
+		, GTK_GL_AREA(render->glarea)
+		) ;
+
+	// Start updating:
+	gdk_frame_clock_begin_updating(frame_clock);
+
 }
 
 gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context, gpointer user_data) {
