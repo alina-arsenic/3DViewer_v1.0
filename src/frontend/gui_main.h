@@ -93,7 +93,7 @@ typedef struct Widgets_controls {
 
 typedef struct Model {
   GLuint VAO, VBO, EBO;             /*!< Buffer objects */
-  GLchar *path;
+  GLchar *path;                     /*!< File path */
   GLchar infoLog[LOG_LEN];
 
   const C_STRUCT aiScene* scene;    /*!< Data from file */
@@ -107,8 +107,8 @@ typedef struct Model {
 
 typedef struct Render_data {
   GtkWidget *glarea;                 /*!< Area to render 3D object */
-  GdkFrameClock *frame_clock;
-  GLuint shaderProgram;
+  GdkFrameClock *frame_clock;        /*!< Needed for frame changing */
+  GLuint shaderProgram;              /*!< Compiled OpenGL shader program index */
   GLchar infoLog[LOG_LEN];
 
   model *model;
