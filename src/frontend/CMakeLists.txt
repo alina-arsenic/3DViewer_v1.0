@@ -27,7 +27,9 @@ set(LINK_OPTIONS_GUI) # -export-dynamic -fsanitize=address -fsanitize=undefined)
 #find_package(GTK REQUIRED gtk+-3.0)
 pkg_check_modules(GTK REQUIRED gtk+-3.0)
 pkg_check_modules(OGL REQUIRED gl)
-pkg_check_modules(OGL REQUIRED glew)
+pkg_check_modules(GLEW REQUIRED glew)
+pkg_check_modules(CGLM REQUIRED cglm)
+pkg_check_modules(ASSIMP REQUIRED assimp)
 #add_definitions(${GTK_LIBRARY_DIRS} ${OGL_LIBRARY_DIRS})
 add_executable(${PROJECT_GUI} ${SRCS_GUI})
 
@@ -35,12 +37,14 @@ add_executable(${PROJECT_GUI} ${SRCS_GUI})
 
 target_compile_options(${PROJECT_GUI} PRIVATE ${COMP_OPTIONS_GUI})
 target_link_options(${PROJECT_GUI} PRIVATE ${LINK_OPTIONS_GUI})
-target_link_libraries (${PROJECT_GUI} PRIVATE m ${GTK_LIBRARIES} ${OGL_LIBRARIES} ${GLEW_LIBRARIES})
-target_link_directories(${PROJECT_GUI} PRIVATE ${GTK_LIBRARY_DIRS} ${OGL_LIBRARY_DIRS} ${GLEW_LIBRARY_DIRS})
+target_link_libraries (${PROJECT_GUI} PRIVATE m ${GTK_LIBRARIES} ${OGL_LIBRARIES} ${GLEW_LIBRARIES} ${CGLM_LIBRARIES} ${ASSIMP_LIBRARIES})
+target_link_directories(${PROJECT_GUI} PRIVATE ${GTK_LIBRARY_DIRS} ${OGL_LIBRARY_DIRS} ${GLEW_LIBRARY_DIRS} ${CGLM_LIBRARY_DIRS} ${ASSIMP_LIBRARY_DIRS})
 target_include_directories(
         ${PROJECT_GUI}  PRIVATE
         ${GTK_INCLUDE_DIRS}
         ${OGL_INCLUDE_DIRS}
         ${GLEW_INCLUDE_DIRS}
+        ${CGLM_INCLUDE_DIRS}
+        ${ASSIMP_INCLUDE_DIRS}
 )
 set_target_properties(${PROJECT_GUI} PROPERTIES OUTPUT_NAME "viewer.app")

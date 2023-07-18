@@ -34,7 +34,7 @@ gboolean on_key_press(
   widgets_controls *p_ctrl = user_data;
   unsigned int key = event->keyval;
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
-  printf("Pressed key: %d\n", event->keyval);
+  //printf("Pressed key: %d\n", event->keyval);
   if (key == GDK_KEY_Return) {
     GtkWidget *target = gtk_window_get_focus(GTK_WINDOW(window));
     if (GTK_IS_ENTRY(target)) {
@@ -114,11 +114,16 @@ void on_glarea_realize(GtkGLArea *glarea, gpointer user_data) {
   glewInit();
   glEnable(GL_DEPTH_TEST);
 
-  char infoLog[512];
-  if (shader_compiler(&render->shaderProgram, infoLog)) {
-    printf("ERROR: %s\n", infoLog);
+  memset(render->infoLog, 0, LOG_LEN);
+  memset(render->model->infoLog, 0, LOG_LEN);
+
+  if (shadersInit(render, render->infoLog)) {
+    printf("ERROR: %s\n", render->infoLog);
   }
-  buffer_binder(&render->VAO);
+
+  if (modelLoad(render->model) || buffersInit(render->model)) { // CHANGE: MUST BE CALLED WITH MODEL OPENING FROM FILE
+    printf("ERROR: %s\n", render->model->infoLog);
+  }
 
   // Get frame clock:
 	GdkGLContext *glcontext = gtk_gl_area_get_context(GTK_GL_AREA(render->glarea));
@@ -143,7 +148,7 @@ gboolean on_glarea_render(GtkGLArea *glarea, GdkGLContext *context, gpointer use
 
 	glClearColor(0.15f, 0.15f, 0.15f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  draw_model(render);
+  modelDraw(render);
   glFlush();
 
   // Don't propagate signal:
@@ -204,7 +209,7 @@ gboolean on_glarea_scroll(
   //////////// FIXME: Just to test, insert implementation here
   shift_adjustment(p_ctrl->scale.adj, INC_FLAT, panning.z);
   panning.z = 0;
-  printf("Mouse scroll state = z = %lf\n", panning.z);
+  //printf("Mouse scroll state = z = %lf\n", panning.z);
   ////////////
   return FALSE;
 }
@@ -230,7 +235,7 @@ gboolean on_glarea_button_press(
   panning.buf_x_r = gtk_adjustment_get_value(p_ctrl->rotat_x.adj);
   panning.buf_y_r = gtk_adjustment_get_value(p_ctrl->rotat_y.adj);
 
-  printf("Mouse init place = x = %lf y = %lf\n", panning.x, panning.y);
+  //printf("Mouse init place = x = %lf y = %lf\n", panning.x, panning.y);
   /////////
   return FALSE;
 }
@@ -266,8 +271,8 @@ gboolean on_glarea_motion_notify(
     shift_adjustment(p_ctrl->rotat_y.adj, SET_TO_VAL,
                      panning.buf_y_r + panning.dy);
   }
-  printf("Mouse new place = x = %lf y = %lf\n", panning.x, panning.y);
-  printf("Mouse movement = dx = %lf dy = %lf\n", panning.dx, panning.dy);
+  //printf("Mouse new place = x = %lf y = %lf\n", panning.x, panning.y);
+  //printf("Mouse movement = dx = %lf dy = %lf\n", panning.dx, panning.dy);
   /////////
   return FALSE;
 }

@@ -23,12 +23,23 @@
 #define CTRL_MUL           0.005L    /*!< Multiplayer to buttons controls */
 #define ENTRY_BUFFER_SIZE  255      /*!< Size of buffer for entry boxes */
 #define FILENAME_LENGTH    4096     /*!< Max length of filename in Linux OS */
+#define LOG_LEN 512                 /*!< InfoLog length */
+
+#define max(a,b) {if (a < b) a = b;}
+#define min(a,b) {if (a > b) a = b;}
 
 // GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
 
 #include <gtk-3.0/gtk/gtk.h>
+
+#include <cglm/cglm.h>
+#include <cglm/affine.h>
+
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 /**
  * @brief Struct with paths to files with configurations of UI
@@ -80,13 +91,27 @@ typedef struct Widgets_controls {
   GtkWidget *b_help;                /*!< Button to open help/about window */
 }widgets_controls;
 
+typedef struct Model {
+  GLuint VAO, VBO, EBO;             /*!< Buffer objects */
+  GLchar *path;
+  GLchar infoLog[LOG_LEN];
+
+  const C_STRUCT aiScene* scene;    /*!< Data from file */
+  C_STRUCT aiVector3D max, min;     /*!< Max and min vertices coordinates */
+  unsigned int vertices_count, faces_count;
+
+  struct { double x, y, z; } trans;  /*!< Initial transformation vector */
+  struct { double x, y, z; } center; /*!< Model center */
+  double scale;                      /*!< Scaling for transitioning */
+}model;
+
 typedef struct Render_data {
   GtkWidget *glarea;                 /*!< Area to render 3D object */
-
-  GLuint shaderProgram;
-  GLuint VAO;
   GdkFrameClock *frame_clock;
+  GLuint shaderProgram;
+  GLchar infoLog[LOG_LEN];
 
+  model *model;
   widgets_controls *ctrls;
 
   int width;
@@ -191,9 +216,17 @@ void reset_scale(widgets_controls *ctrl);
 
 //******************************* MODEL ************************************//
 
-int shader_compiler(GLuint *shaderProgram, char *infoLog);
-void buffer_binder(GLuint *VAO);
-void draw_model(render_data *render);
+GLchar *getFileBuffer(char *path);
+int shadersInit(render_data *render, GLchar *infoLog);
+int modelLoad(model *model);
+int buffersInit(model *model);
+void countVerticesAndFaces(model *model);
+void init_minmax(model *model, C_STRUCT aiVector3D v);
+void minmax(model *model, C_STRUCT aiVector3D v);
+void verticesInit(model *model, GLfloat *vertices);
+void indicesInit(model *model, GLuint *indices);
+void utilityInit(model *model);
+void modelDraw(render_data *render);
 
 
 #endif //C8_3DVIEWER_V1_0_1_GUI_MAIN_H

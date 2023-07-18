@@ -27,8 +27,11 @@ int main(int argc, char *argv[]) {
   };
   widgets_core w_core;
   widgets_controls ctrl;
+  model model;
   render_data render;
   render.ctrls = &ctrl;
+  render.model = &model;
+  model.path = argv[1];   // CHANGE
 
   w_core.ui_builder = gtk_builder_new();
   builder_init(&w_core, *path.xml);
