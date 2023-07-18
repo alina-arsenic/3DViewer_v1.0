@@ -235,7 +235,6 @@ void modelDraw(render_data *render) {
 
     mat4 view;
     glm_translate_make(view, base_vec);
-    //printf("%lf %lf %lf\n", render->model->trans.x, render->model->trans.y, render->model->trans.z);
     vec3 trans_vec = {render->model->trans.x + buf_x_t * render->model->scale,
                       render->model->trans.y + buf_y_t * render->model->scale,
                     ((render->model->trans.z + buf_z_t * render->model->scale)) / (0.5 + buf_scale / 20)};
@@ -254,7 +253,6 @@ void modelDraw(render_data *render) {
     GLint projectionLoc = glGetUniformLocation(render->shaderProgram, "projection");
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, (const GLfloat *)projection);
 
-    // Draw our first triangle
     glUseProgram(render->shaderProgram);
 
     glBindVertexArray(render->model->VAO);
