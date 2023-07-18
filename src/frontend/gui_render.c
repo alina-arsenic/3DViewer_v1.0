@@ -191,13 +191,14 @@ void utilityInit(model *model) {
 
     model->trans.x = 0;
     model->trans.y = -(model->max.y + model->min.y) / 2;
-    model->trans.z = delta_max * -1.5;
+    model->trans.z = delta_max * -2.5;
 
     model->center.x = 0;
     model->center.y = -(model->max.y + model->min.y) / 2;
     model->center.z = -(model->max.z + model->min.z) / 2;
 
     model->scale = delta_max / 50;
+    model->scale_z = (model->scale > 4) ? 4.0 : model->scale;
 
 }
 
@@ -237,12 +238,12 @@ void modelDraw(render_data *render) {
     glm_translate_make(view, base_vec);
     vec3 trans_vec = {render->model->trans.x + buf_x_t * render->model->scale,
                       render->model->trans.y + buf_y_t * render->model->scale,
-                    ((render->model->trans.z + buf_z_t * render->model->scale)) / (0.5 + buf_scale / 20)};
+                    ((render->model->trans.z + buf_z_t * render->model->scale_z)) / (1 + buf_scale / 20)};
     glm_translate(view, trans_vec);
 
     mat4 projection;
     glm_translate_make(projection, base_vec);
-    glm_perspective(45.0f, (GLfloat)render->width/render->height, 0.1f, 2000.0f, projection);
+    glm_perspective(45.0f, (GLfloat)render->width/render->height, 0.1f, 4000.0f, projection);
 
     GLint modelLoc = glGetUniformLocation(render->shaderProgram, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, (const GLfloat *)model);

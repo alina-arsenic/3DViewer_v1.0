@@ -201,9 +201,9 @@ gboolean on_glarea_scroll(
     GtkWidget* widget, GdkEventScroll *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   if (event->direction == GDK_SCROLL_UP) {
-    view_z_decrease();
-  } else if (event->direction == GDK_SCROLL_DOWN) {
     view_z_increase();
+  } else if (event->direction == GDK_SCROLL_DOWN) {
+    view_z_decrease();
   }
 
   //////////// FIXME: Just to test, insert implementation here

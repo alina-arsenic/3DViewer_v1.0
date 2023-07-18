@@ -102,7 +102,7 @@ typedef struct Model {
 
   struct { double x, y, z; } trans;  /*!< Initial transformation vector */
   struct { double x, y, z; } center; /*!< Model center */
-  double scale;                      /*!< Scaling for transitioning */
+  double scale, scale_z;             /*!< Scaling for transitioning */
 }model;
 
 typedef struct Render_data {
