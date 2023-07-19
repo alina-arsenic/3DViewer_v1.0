@@ -21,6 +21,12 @@ file(GLOB HEAD_GUI ../backend/*.h ./*.h)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/materials
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/samples
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 set(COMP_OPTIONS_GUI -Wall -Wextra -std=c11 -Wpedantic -Wno-unused-parameter -Wno-deprecated)
 set(LINK_OPTIONS_GUI) # -export-dynamic -fsanitize=address -fsanitize=undefined)
 

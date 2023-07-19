@@ -45,8 +45,9 @@
  * @brief Struct with paths to files with configurations of UI
  */
 typedef struct Config_paths {
-  const char* xml[FILENAME_LENGTH]; /*!< Path to glade-generated xml file */
-  const char* css[FILENAME_LENGTH]; /*!< Path to file with css styles for GUI */
+  const char* xml[FILENAME_LENGTH];     /*!< Path to glade-generated xml file */
+  const char* css[FILENAME_LENGTH];     /*!< Path to file with css styles for GUI */
+  const char* model[FILENAME_LENGTH];   /*!< Path to file with initial model */
 }config_paths;
 /**
  * @brief Struct with core widgets of program - builder, main window and error
@@ -93,7 +94,7 @@ typedef struct Widgets_controls {
 
 typedef struct Model {
   GLuint VAO, VBO, EBO;             /*!< Buffer objects */
-  GLchar *path;                     /*!< File path */
+  const GLchar *path;                     /*!< File path */
   GLchar infoLog[LOG_LEN];
 
   const C_STRUCT aiScene* scene;    /*!< Data from file */

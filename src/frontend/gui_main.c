@@ -23,7 +23,8 @@ int main(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
   config_paths path = {
       .xml = {"materials/viewer_glade.xml"},
-      .css = {"materials/viewer_glade.css"}
+      .css = {"materials/viewer_glade.css"},
+      .model = {"samples/2_man.obj"}
   };
   widgets_core w_core;
   widgets_controls ctrl;
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
   render_data render;
   render.ctrls = &ctrl;
   render.model = &model;
-  model.path = argv[1];   // CHANGE
+  model.path = *path.model;   // CHANGE
 
   w_core.ui_builder = gtk_builder_new();
   builder_init(&w_core, *path.xml);
