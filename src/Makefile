@@ -48,8 +48,12 @@ rebuild: clean build
 install: build
 	@mkdir -vp install
 	@mkdir -vp install/materials
+	@mkdir -vp install/samples
+	@mkdir -vp install/shaders
 	@cp -v build/frontend/viewer.app install
 	@cp -rv build/frontend/materials/* install/materials/
+	@cp -rv build/frontend/samples/* install/samples/
+	@cp -rv build/frontend/shaders/* install/shaders/
 	@rm -rf build/frontend
 
 run:
