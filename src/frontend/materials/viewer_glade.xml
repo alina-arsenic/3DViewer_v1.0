@@ -50,6 +50,7 @@
     <property name="height-request">720</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">3DViewer_v1.0</property>
+    <property name="resizable">False</property>
     <property name="default-width">1280</property>
     <property name="default-height">720</property>
     <child>
@@ -60,8 +61,6 @@
         <property name="vexpand">True</property>
         <child>
           <object class="GtkGLArea" id="gl_drawing_area">
-            <property name="width-request">1280</property>
-            <property name="height-request">720</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="hexpand">True</property>
