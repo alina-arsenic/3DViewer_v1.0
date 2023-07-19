@@ -56,6 +56,8 @@
       <object class="GtkFixed" id="dot_grid_main">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
         <child>
           <object class="GtkGLArea" id="gl_drawing_area">
             <property name="width-request">1280</property>
@@ -105,6 +107,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="has-entry">True</property>
+                        <property name="active-id">Man</property>
                         <items>
                           <item id="Bunny" translatable="yes">samples/1_bunny.obj</item>
                           <item id="Man" translatable="yes">samples/2_man.obj</item>
