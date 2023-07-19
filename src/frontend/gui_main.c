@@ -21,11 +21,9 @@
 
 int main(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
-  config_paths path = {
-      .xml = {"materials/viewer_glade.xml"},
-      .css = {"materials/viewer_glade.css"},
-      .model = {"samples/2_man.obj"}
-  };
+  config_paths path = {.xml = {"materials/viewer_glade.xml"},
+                       .css = {"materials/viewer_glade.css"},
+                       .model = {"samples/2_man.obj"}};
   widgets_core w_core;
   widgets_controls ctrl;
   model model;
