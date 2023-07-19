@@ -79,12 +79,13 @@ dvi_pdf:
 	cd doc/latex && make || exit
 	open doc/latex/refman.pdf
 
-dist: build
+dist: install
 	@mkdir -vp Viewer-1.0
 	@mkdir -vp Viewer-1.0/materials
+	@mkdir -vp Viewer-1.0/samples
+	@mkdir -vp Viewer-1.0/shaders
 	@mkdir -vp dist
-	@cp -v build/frontend/Viewer.app Viewer-1.0
-	@cp -v build/frontend/materials/* Viewer-1.0/materials/
+	@cp -rv install/* Viewer-1.0
 	@tar -czvf dist/Viewer-1.0.tar.gz Viewer-1.0
 	@rm -rf Viewer-1.0
 
