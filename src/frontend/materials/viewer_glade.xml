@@ -106,14 +106,14 @@
                         <property name="can-focus">False</property>
                         <property name="has-entry">True</property>
                         <items>
-                          <item id="Sphere" translatable="yes">Sphere</item>
-                          <item id="Cube" translatable="yes">Cube</item>
-                          <item id="teapot" translatable="yes">Teapot</item>
+                          <item id="Bunny" translatable="yes">samples/1_bunny.obj</item>
+                          <item id="Man" translatable="yes">samples/2_man.obj</item>
+                          <item id="Liberty" translatable="yes">samples/3_LibertStatue.obj</item>
                         </items>
                         <child internal-child="entry">
                           <object class="GtkEntry" id="entry_file_path">
-                            <property name="can-focus">False</property>
-                            <property name="text" translatable="yes">Select file / enter path ...</property>
+                            <property name="can-focus">True</property>
+                            <property name="placeholder-text" translatable="yes">Select file / enter path ...</property>
                           </object>
                         </child>
                       </object>
@@ -935,9 +935,7 @@
             <property name="height-request">80</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">blah-blah-blah
-
-Keyboard Controls:
+            <property name="label" translatable="yes">Keyboard Controls:
 Translation:
 x: W(w)/Ц(ц), S(s)/Ы(ы); 
 y: A(a)/Ф(ф), D(d)/В(в);

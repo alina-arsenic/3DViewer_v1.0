@@ -75,6 +75,16 @@ typedef struct Controls_group {
 typedef struct Widgets_controls {
   GtkWidget *box_ctrls;             /*!< Box with all widgets for control */
 
+  GtkWidget *model_grid_file;       /*!< Grid with model information */
+  GtkWidget *path_combobox;         /*!< Combobox to select model */
+  GtkEntry  *path_entry;            /*!< Entry for model name */
+  GtkWidget *b_model_select;        /*!< Button to select model */
+
+  GtkWidget *model_grid_menu;       /*!< Grid with model information */
+  GtkLabel  *model_name;            /*!< Entry for model name */
+  GtkLabel  *model_vertices;        /*!< Entry for model vertices counter */
+  GtkLabel  *model_edges;           /*!< Entry for model edges counter */
+
   GtkWidget *trans_grid_menu;       /*!< Grid with translation controls */
   controls_group trans_x;
   controls_group trans_y;
@@ -94,7 +104,7 @@ typedef struct Widgets_controls {
 
 typedef struct Model {
   GLuint VAO, VBO, EBO;             /*!< Buffer objects */
-  const GLchar *path;                     /*!< File path */
+  const GLchar *path;               /*!< File path */
   GLchar infoLog[LOG_LEN];
 
   const C_STRUCT aiScene* scene;    /*!< Data from file */
@@ -156,8 +166,8 @@ void glarea_init(widgets_core* w_core, render_data *render);
 /**
  * @brief Connecting signals to its handlers as callback functions
  */
-void signals_connect(
-    widgets_core* w_core, widgets_controls* ctrls, render_data *render);
+void signals_connect(widgets_core* w_core, widgets_controls* ctrls,
+                     render_data *render, model *model);
 /**
  * @brief Connecting signals to glarea events to its handlers
  */
@@ -167,11 +177,14 @@ void glarea_signals_connect(render_data *render, widgets_controls *ctrls);
  */
 void set_css_style(widgets_core* w_core, const char* path_css);
 
+void set_model_info(model model, widgets_controls *ctrls);
 
-//*************************** EVENT HANDLERS *********************************//
+    //*************************** EVENT HANDLERS *********************************//
 
 void on_btn_pressed_help(GtkButton *button, gpointer user_data);
 void on_btn_pressed_hide_ctrl(GtkButton *button, gpointer user_data);
+void on_btn_pressed_model_select(GtkButton *button, gpointer user_data);
+
 /**
  * @brief Reading pressed buttons TODO: fill it
  * @return gboolean Always returns false. #TRUE used to stop other handlers from
@@ -203,6 +216,7 @@ gboolean on_glarea_motion_notify(
 
 //******************************* UTILITY ************************************//
 
+char *file_from_path(char *pathname);
 void on_main_window_resize(GtkWindow* window, gpointer user_data);
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
 void set_entry_from_adjust(GtkEntry *entry, GtkAdjustment *adj);
@@ -213,9 +227,9 @@ void shift_adjustment(GtkAdjustment *adj, shift_type type, double shift_value);
 gboolean keyval_compare(unsigned int ref, ...);
 gboolean is_key(unsigned int keyval, char key);
 void reset_scale(widgets_controls *ctrl);
+void read_path_from_entry(GtkEntry *entry, char *path);
 
-
-//******************************* MODEL ************************************//
+    //******************************* MODEL ************************************//
 
 GLchar *getFileBuffer(char *path);
 int shadersInit(render_data *render, GLchar *infoLog);

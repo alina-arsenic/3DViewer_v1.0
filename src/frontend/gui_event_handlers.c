@@ -29,41 +29,56 @@ void on_btn_pressed_help(GtkButton *button, gpointer user_data) {
   gtk_window_present(GTK_WINDOW(p_core->window_help));
 }
 
+void on_btn_pressed_model_select(GtkButton *button, gpointer user_data) {
+  render_data *render = user_data;
+  char path[FILENAME_LENGTH];
+  read_path_from_entry(render->ctrls->path_entry, path);
+  if (strcmp(path, "Incorrect path") != 0) {
+    render->model->path = path;
+    on_glarea_realize(GTK_GL_AREA(render->glarea), user_data);
+    set_model_info(*render->model, render->ctrls);
+  } else {
+    gtk_entry_set_text(render->ctrls->path_entry, path);
+  }
+}
+
 gboolean on_key_press(
     GtkWidget *window, GdkEventKey *event, gpointer user_data) {
   widgets_controls *p_ctrl = user_data;
   unsigned int key = event->keyval;
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   //printf("Pressed key: %d\n", event->keyval);
-  if (key == GDK_KEY_Return) {
-    GtkWidget *target = gtk_window_get_focus(GTK_WINDOW(window));
-    if (GTK_IS_ENTRY(target)) {
-      read_entry_on_change(GTK_ENTRY(target), p_ctrl);
+  GtkWidget *target = gtk_window_get_focus(GTK_WINDOW(window));
+  if (target != GTK_WIDGET(p_ctrl->path_entry)) {
+    if (key == GDK_KEY_Return) {
+      if (GTK_IS_ENTRY(target)) {
+        read_entry_on_change(GTK_ENTRY(target), p_ctrl);
+      }
+    } else if (is_key(key, 'A')) {
+      on_btn_pressed_left(
+          NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
+    } else if (is_key(key, 'D')) {
+      on_btn_pressed_right(
+          NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
+    } else if (is_key(key, 'S')) {
+      on_btn_pressed_left(
+          NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
+    } else if (is_key(key, 'W')) {
+      on_btn_pressed_right(
+          NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
+    } else if (is_key(key, 'Q')) {
+      on_btn_pressed_left(
+          NULL, ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
+    } else if (is_key(key, 'E')) {
+      on_btn_pressed_right(
+          NULL,ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
+    } else if (is_key(key, '-')) {
+      on_btn_pressed_left(NULL, &p_ctrl->scale);
+    } else if (is_key(key, '+')) {
+      on_btn_pressed_right(NULL, &p_ctrl->scale);
+    } else if (is_key(key, 'R')) {
+      reset_scale(p_ctrl);
     }
-  } else if (is_key(key, 'A')) {
-    on_btn_pressed_left(
-        NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
-  } else if (is_key(key, 'D')) {
-    on_btn_pressed_right(
-        NULL,ctrl_pressed ? &p_ctrl->rotat_x : &p_ctrl->trans_x);
-  } else if (is_key(key, 'S')) {
-    on_btn_pressed_left(
-        NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
-  } else if (is_key(key, 'W')) {
-    on_btn_pressed_right(
-        NULL,ctrl_pressed ? &p_ctrl->rotat_y : &p_ctrl->trans_y);
-  } else if (is_key(key, 'Q')) {
-    on_btn_pressed_left(
-        NULL, ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
-  } else if (is_key(key, 'E')) {
-    on_btn_pressed_right(
-        NULL,ctrl_pressed ? &p_ctrl->rotat_z : &p_ctrl->trans_z);
-  } else if (is_key(key, '-')) {
-    on_btn_pressed_left(NULL, &p_ctrl->scale);
-  } else if (is_key(key, '+')) {
-    on_btn_pressed_right(NULL, &p_ctrl->scale);
-  } else if (is_key(key, 'R')) {
-    reset_scale(p_ctrl);
   }
   return FALSE;
 }

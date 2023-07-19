@@ -25,6 +25,27 @@
 //  }
 //}
 
+char *file_from_path(char *pathname)
+{
+  char *fname = NULL;
+  if (pathname)
+  {
+    fname = strrchr (pathname, '/') + 1;
+  }
+  return fname;
+}
+// to read filename:
+//int main (void)
+//{
+//  char pathname[] = "/Users/abc/Desktop/xyz/test.s";
+//  char *fname = file_from_path (pathname);
+//
+//  printf ("path \"%s\", filename \"%s\"\n", pathname,
+//         fname != NULL ? fname : "(null)");
+//
+//  return 0;
+//}
+
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data) {
   gtk_widget_hide(widget);
   return TRUE;
@@ -163,4 +184,15 @@ void reset_scale(widgets_controls *ctrl) {
   shift_adjustment(ctrl->rotat_y.adj, SET_TO_VAL, 0);
   shift_adjustment(ctrl->rotat_z.adj, SET_TO_VAL, 0);
   shift_adjustment(ctrl->scale.adj, SET_TO_VAL, 10);
+}
+
+void read_path_from_entry(GtkEntry *entry, char *path) {
+  const char *entry_buffer;
+  entry_buffer = gtk_entry_get_text(entry);
+
+  if (access(entry_buffer, F_OK) == 0) {
+    sprintf(path, "%s", entry_buffer);
+  } else {
+    sprintf(path, "%s", "Incorrect path");
+  }
 }

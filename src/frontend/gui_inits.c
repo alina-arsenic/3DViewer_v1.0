@@ -34,6 +34,26 @@ void widget_init(widgets_core* w_core, widgets_controls* ctrls) {
   ctrls->box_ctrls = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "box_controls"));
 
+  ctrls->model_grid_file = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "grid_file_select"));
+
+  ctrls->path_combobox = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "combobox_file_path"));
+  ctrls->path_entry = GTK_ENTRY(
+      gtk_builder_get_object(w_core->ui_builder, "entry_file_path"));
+  ctrls->b_model_select = GTK_WIDGET(
+      gtk_builder_get_object(w_core->ui_builder, "button_file_select"));
+
+  ctrls->model_grid_menu = GTK_WIDGET(
+          gtk_builder_get_object(w_core->ui_builder, "grid_model_info"));
+
+  ctrls->model_name = GTK_LABEL(
+      gtk_builder_get_object(w_core->ui_builder, "label_file_name_value"));
+  ctrls->model_vertices = GTK_LABEL(
+      gtk_builder_get_object(w_core->ui_builder, "label_vertices_value"));
+  ctrls->model_edges = GTK_LABEL(
+      gtk_builder_get_object(w_core->ui_builder, "label_edges_value"));
+
   ctrls->trans_grid_menu = GTK_WIDGET(
       gtk_builder_get_object(w_core->ui_builder, "grid_menu_translation"));
 
@@ -168,8 +188,8 @@ void connect_control_group(controls_group *ctrl_group) {
                    G_CALLBACK(on_entry_focus_out_event), ctrl_group);
 }
 
-void signals_connect(
-    widgets_core* w_core, widgets_controls* ctrls, render_data *render) {
+void signals_connect(widgets_core* w_core, widgets_controls* ctrls,
+                     render_data *render, model *model) {
   // callback function to exit from gtk_main() cycle when app is closed
   g_signal_connect(w_core->window_main, "destroy",
                    G_CALLBACK(gtk_main_quit), NULL);
@@ -184,6 +204,9 @@ void signals_connect(
                    G_CALLBACK(on_btn_pressed_help), w_core);
   g_signal_connect(w_core->window_main, "key_press_event",
                    G_CALLBACK(on_key_press), ctrls);
+
+  g_signal_connect(ctrls->b_model_select, "pressed",
+                   G_CALLBACK(on_btn_pressed_model_select), render);
 
   connect_control_group(&ctrls->trans_x);
   connect_control_group(&ctrls->trans_y);
@@ -230,4 +253,18 @@ void set_css_style(widgets_core* w_core, const char* path_css) {
       gdk_screen_get_default(),
       GTK_STYLE_PROVIDER(provider_file),
       GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+void set_model_info(model model, widgets_controls *ctrls) {
+  char vertices_buf[FILENAME_LENGTH],
+       edges_buf[FILENAME_LENGTH];
+  gtk_label_set_label(ctrls->model_name,
+                      file_from_path((char *)model.path));
+
+  sprintf(vertices_buf, "%d", model.vertices_count);
+  sprintf(edges_buf, "%d",
+          model.faces_count + model.vertices_count - 2); // euler's formula
+
+  gtk_label_set_label(ctrls->model_vertices, vertices_buf);
+  gtk_label_set_label(ctrls->model_edges, edges_buf);
 }

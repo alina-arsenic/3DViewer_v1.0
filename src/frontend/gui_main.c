@@ -32,17 +32,18 @@ int main(int argc, char *argv[]) {
   render_data render;
   render.ctrls = &ctrl;
   render.model = &model;
-  model.path = *path.model;   // CHANGE
+  model.path = *path.model;
 
   w_core.ui_builder = gtk_builder_new();
   builder_init(&w_core, *path.xml);
   widget_init(&w_core, &ctrl);
   entry_init(&ctrl);
   glarea_init(&w_core, &render);
-  signals_connect(&w_core, &ctrl, &render);
+  signals_connect(&w_core, &ctrl, &render, &model);
   glarea_signals_connect(&render, &ctrl);
   set_css_style(&w_core, *path.css);
   gtk_widget_show(w_core.window_main);
+  set_model_info(model, &ctrl);
   gtk_main();
   return 0;
 }
