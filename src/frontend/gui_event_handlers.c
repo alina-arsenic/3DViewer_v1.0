@@ -44,7 +44,8 @@ void on_btn_pressed_model_select(GtkButton *button, gpointer user_data) {
 
 gboolean on_key_press(
     GtkWidget *window, GdkEventKey *event, gpointer user_data) {
-  widgets_controls *p_ctrl = user_data;
+  render_data *render = user_data;
+  widgets_controls *p_ctrl = render->ctrls;
   unsigned int key = event->keyval;
   gboolean ctrl_pressed = (gboolean) (event->state & GDK_CONTROL_MASK);
   //printf("Pressed key: %d\n", event->keyval);
@@ -79,6 +80,9 @@ gboolean on_key_press(
     } else if (is_key(key, 'R')) {
       reset_scale(p_ctrl);
     }
+  } else if (key == GDK_KEY_Return) {
+    on_btn_pressed_model_select(GTK_BUTTON(render->ctrls->b_model_select),
+                                render);
   }
   return FALSE;
 }

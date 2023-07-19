@@ -203,7 +203,7 @@ void signals_connect(widgets_core* w_core, widgets_controls* ctrls,
   g_signal_connect(ctrls->b_help, "pressed",
                    G_CALLBACK(on_btn_pressed_help), w_core);
   g_signal_connect(w_core->window_main, "key_press_event",
-                   G_CALLBACK(on_key_press), ctrls);
+                   G_CALLBACK(on_key_press), render);
 
   g_signal_connect(ctrls->b_model_select, "pressed",
                    G_CALLBACK(on_btn_pressed_model_select), render);

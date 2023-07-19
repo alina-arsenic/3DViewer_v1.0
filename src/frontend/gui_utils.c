@@ -156,8 +156,8 @@ gboolean is_key(unsigned int keyval, char key) {
     res = keyval_compare(keyval, GDK_KEY_plus, GDK_KEY_KP_Add,
                          GDK_KEY_equal, 0);
   } else if (key == 'R') {
-    res = keyval_compare(keyval, GDK_KEY_R, GDK_KEY_r, GDK_KEY_Cyrillic_ie,
-                         GDK_KEY_Cyrillic_IE, 0);
+    res = keyval_compare(keyval, GDK_KEY_R, GDK_KEY_r, GDK_KEY_Cyrillic_ka,
+                         GDK_KEY_Cyrillic_KA, 0);
   }
   return (res);
 }
