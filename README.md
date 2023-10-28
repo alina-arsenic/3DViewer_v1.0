@@ -51,7 +51,7 @@ GUI:
 - `left click + drag` - вращение
 - `right click + drag` - перемещение
 - `scroll` - масштаб
-- 
+
 Клавиатура:
 - `WASD` - перемещение
 - `+/-` - масштаб
@@ -69,4 +69,4 @@ make dvi
 ```
 
 ### Демонстрация работы
-[](misc/sample.gif)
+[sample.gif](misc/sample.gif)
