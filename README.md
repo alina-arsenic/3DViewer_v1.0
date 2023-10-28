@@ -69,4 +69,4 @@ make dvi
 ```
 
 ### Демонстрация работы
-[sample.gif](misc/sample.gif)
+![sample.gif](misc/sample.gif)
